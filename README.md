@@ -8,7 +8,7 @@ Two themes share one core:
 | | | |
 |---|---|---|
 | **coffee** | warm — press-red, ochre, sepia on newsprint cream | light + dark |
-| **graphite** | cool — oxblood, brass, steel on grey stock | light + dark |
+| **graphite** | cool — blueprint blue, cyan, teal, slate on grey stock | light + dark |
 
 ```vim
 :colorscheme coffee
@@ -101,18 +101,32 @@ faces, but H1 and H2 in particular become harder to tell apart at a glance.
 
 ## Palettes
 
-Roles, not colors. `cmd` is press-red in coffee and oxblood in graphite.
+Roles, not colors. `cmd` is press-red in coffee and drafting red in graphite;
+`math` is ochre in one and teal in the other.
 
 | role | used for | coffee (light) | graphite (light) |
 |---|---|---|---|
-| `cmd` | commands, headings | `#8c1c13` | `#8e1f42` |
-| `alert` | errors, H3 | `#a52019` | `#a82945` |
-| `ref` | refs, citations, links | `#1f4e79` | `#23488c` |
-| `env` | environment names | `#2c5f5d` | `#0a5570` |
-| `verb` | strings, verbatim | `#4f5d16` | `#2d6135` |
-| `math` | math zones, numbers | `#7d5f0e` | `#6b6220` |
-| `opt` | `[options]`, `#params` | `#70386b` | `#653490` |
-| `quote` | blockquotes, types, H4–H6 | `#7a5c3e` | `#4d5a66` |
+| `cmd` | commands, headings | `#8c1c13` press-red | `#a3123a` drafting red |
+| `alert` | errors, H3 | `#a52019` | `#bd2b46` |
+| `ref` | refs, citations, links | `#1f4e79` navy | `#1d4f9c` blueprint blue |
+| `env` | environment names | `#2c5f5d` verdigris | `#0b5a6b` cyan |
+| `math` | math zones, numbers | `#7d5f0e` ochre | `#1a6350` teal |
+| `verb` | strings, verbatim | `#4f5d16` olive | `#2d7033` green |
+| `opt` | `[options]`, `#params` | `#70386b` plum | `#6b3d96` violet |
+| `quote` | blockquotes, types, H4–H6 | `#7a5c3e` sepia | `#4d5a66` slate |
+
+The two are designed from different premises rather than being recolors of each
+other. Coffee is weighted to the warm half of the wheel — five of its eight
+accents sit between 300° and 90° — which is what makes it read as printing ink
+on warm stock. Graphite commits to the cool half, with commands as the single
+warm exception because they have to pop hardest, and `quote` carrying its role
+on low saturation instead of a hue of its own.
+
+That also means the two don't share a role→hue assignment. In graphite, green
+goes to strings (the universal convention) and math takes the calmer teal,
+because a math zone is a large band of text and wants the quieter color. The
+cool half of the wheel only fits four or five well-separated hues, so the
+assignment had to change, not just the values.
 
 Paper and ink are four steps each: `bg` / `bg_alt` / `bg_soft` / `bg_deep` and
 `ink` / `ink_soft` / `ink_mute` / `ink_faint`.
