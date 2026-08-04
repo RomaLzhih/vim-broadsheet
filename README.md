@@ -101,12 +101,12 @@ faces, but H1 and H2 in particular become harder to tell apart at a glance.
 
 ## Palettes
 
-Roles, not colors. `cmd` is press-red in coffee and drafting red in graphite;
+Roles, not colors. `cmd` is press-red in coffee and deep plum in graphite;
 `math` is ochre in one and teal in the other.
 
 | role | used for | coffee (light) | graphite (light) |
 |---|---|---|---|
-| `cmd` | commands, headings | `#8c1c13` press-red | `#951135` drafting red |
+| `cmd` | commands, headings | `#8c1c13` press-red | `#662344` deep plum |
 | `alert` | errors, H3 | `#a52019` | `#ac283f` |
 | `ref` | refs, citations, links | `#1f4e79` navy | `#1a488d` blueprint blue |
 | `env` | environment names | `#2c5f5d` verdigris | `#0a5262` cyan |
@@ -125,9 +125,14 @@ both.
 The two are designed from different premises rather than being recolors of each
 other. Coffee is weighted to the warm half of the wheel — five of its eight
 accents sit between 300° and 90° — which is what makes it read as printing ink
-on warm stock. Graphite commits to the cool half, with commands as the single
-warm exception because they have to pop hardest, and `quote` carrying its role
+on warm stock. Graphite commits to the cool half, with `quote` carrying its role
 on low saturation instead of a hue of its own.
+
+Graphite also deliberately keeps commands *quiet*. They are the most frequent
+thing in a `.tex` file, so making them the loudest color turns ordinary prose
+into a field of flashing markup. A deep plum stays clearly distinct from body
+text without shouting, and the loud red is reserved for errors — the thing that
+should actually grab you.
 
 That also means the two don't share a role→hue assignment. In graphite, green
 goes to strings (the universal convention) and math takes the calmer teal,

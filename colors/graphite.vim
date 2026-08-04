@@ -8,8 +8,8 @@
 " on warm stock.  This one commits to the cool half instead:
 "
 "   role    hue   graphite                    coffee, for contrast
-"   cmd     341°  #951135  drafting red       #8c1c13  press-red
-"   alert   348°  #ac283f  brighter red       #a52019
+"   cmd     330°  #662344  deep plum          #8c1c13  press-red
+"   alert   348°  #ac283f  red                #a52019
 "   ref     217°  #1a488d  blueprint blue     #1f4e79  navy
 "   env     190°  #0a5262  cyan               #2c5f5d  verdigris
 "   math    164°  #175a49  teal               #7d5f0e  ochre     (was warm)
@@ -22,7 +22,12 @@
 " cream.  The accents are pitched to sit on it: a greyer page needs slightly
 " deeper inks than a near-white one to hold the same separation.
 "
-" Commands are the single warm exception, because they have to pop hardest.
+" Commands are a deep plum, not a bright red.  They are the most frequent thing
+" in a .tex file, so making them the loudest colour on the page is a mistake —
+" it turns ordinary prose into a field of flashing markup.  They stay clearly
+" distinct from body text and from `alert`, but they no longer shout; the loud
+" red is reserved for errors, which is the thing that should actually grab you.
+"
 " Everything else is cool, and `quote` carries its role on low saturation rather
 " than on a hue of its own — the native logic for a grey theme.
 "
@@ -64,7 +69,7 @@ if &background ==# 'light'
         \ 'ink_soft'  : ['#35393c', '238'],
         \ 'ink_mute'  : ['#585c60', '242'],
         \ 'ink_faint' : ['#949a9f', '247'],
-        \ 'cmd'       : ['#951135', '125'],
+        \ 'cmd'       : ['#662344', '89'],
         \ 'alert'     : ['#ac283f', '161'],
         \ 'ref'       : ['#1a488d', '25'],
         \ 'env'       : ['#0a5262', '24'],
@@ -98,7 +103,7 @@ else
         \ 'ink_soft'  : ['#a8aeb3', '145'],
         \ 'ink_mute'  : ['#848a90', '102'],
         \ 'ink_faint' : ['#565c62', '59'],
-        \ 'cmd'       : ['#ef7f95', '210'],
+        \ 'cmd'       : ['#d497b1', '175'],
         \ 'alert'     : ['#e8697f', '204'],
         \ 'ref'       : ['#7fa8e8', '111'],
         \ 'env'       : ['#56b8cf', '80'],
