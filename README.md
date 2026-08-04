@@ -106,19 +106,21 @@ Roles, not colors. `cmd` is press-red in coffee and drafting red in graphite;
 
 | role | used for | coffee (light) | graphite (light) |
 |---|---|---|---|
-| `cmd` | commands, headings | `#8c1c13` press-red | `#86102f` drafting red |
-| `alert` | errors, H3 | `#a52019` | `#9c2439` |
-| `ref` | refs, citations, links | `#1f4e79` navy | `#18417f` blueprint blue |
-| `env` | environment names | `#2c5f5d` verdigris | `#094a58` cyan |
-| `math` | math zones, numbers | `#7d5f0e` ochre | `#155142` teal |
-| `verb` | strings, verbatim | `#4f5d16` olive | `#255c2a` green |
-| `opt` | `[options]`, `#params` | `#70386b` plum | `#583280` violet |
-| `quote` | blockquotes, types, H4–H6 | `#7a5c3e` sepia | `#3f4a55` slate |
+| `cmd` | commands, headings | `#8c1c13` press-red | `#951135` drafting red |
+| `alert` | errors, H3 | `#a52019` | `#ac283f` |
+| `ref` | refs, citations, links | `#1f4e79` navy | `#1a488d` blueprint blue |
+| `env` | environment names | `#2c5f5d` verdigris | `#0a5262` cyan |
+| `math` | math zones, numbers | `#7d5f0e` ochre | `#175a49` teal |
+| `verb` | strings, verbatim | `#4f5d16` olive | `#29662e` green |
+| `opt` | `[options]`, `#params` | `#70386b` plum | `#62388b` violet |
+| `quote` | blockquotes, types, H4–H6 | `#7a5c3e` sepia | `#46525e` slate |
 
 The stocks differ too: coffee's day edition is newsprint cream `#f5f2e9`,
-graphite's is a properly grey `#d7dce0` rather than an off-white. Graphite's
-accents are pitched deeper to match — a darker page needs darker inks to hold
-the same separation. Body text is pure black in both.
+graphite's is newspaper grey `#e3e5e6` — a dull light grey rather than an
+off-white, with only a faint cool cast so it stays distinct from the cream.
+Graphite's accents are pitched slightly deeper to match, since a greyer page
+needs a little more ink to hold the same separation. Body text is pure black in
+both.
 
 The two are designed from different premises rather than being recolors of each
 other. Coffee is weighted to the warm half of the wheel — five of its eight

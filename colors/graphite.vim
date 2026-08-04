@@ -8,18 +8,19 @@
 " on warm stock.  This one commits to the cool half instead:
 "
 "   role    hue   graphite                    coffee, for contrast
-"   cmd     341°  #86102f  drafting red       #8c1c13  press-red
-"   alert   348°  #9c2439  brighter red       #a52019
-"   ref     217°  #18417f  blueprint blue     #1f4e79  navy
-"   env     190°  #094a58  cyan               #2c5f5d  verdigris
-"   math    164°  #155142  teal               #7d5f0e  ochre     (was warm)
-"   verb    125°  #255c2a  green              #4f5d16  olive     (was warm)
-"   opt     272°  #583280  violet             #70386b  plum
-"   quote   209°  #3f4a55  slate, 25% sat     #7a5c3e  sepia     (was warm)
+"   cmd     341°  #951135  drafting red       #8c1c13  press-red
+"   alert   348°  #ac283f  brighter red       #a52019
+"   ref     217°  #1a488d  blueprint blue     #1f4e79  navy
+"   env     190°  #0a5262  cyan               #2c5f5d  verdigris
+"   math    164°  #175a49  teal               #7d5f0e  ochre     (was warm)
+"   verb    125°  #29662e  green              #4f5d16  olive     (was warm)
+"   opt     272°  #62388b  violet             #70386b  plum
+"   quote   209°  #46525e  slate, 25% sat     #7a5c3e  sepia     (was warm)
 "
-" The stock is a properly grey #d7dce0, not an off-white.  The accents are
-" pitched to sit on it: a darker page needs darker inks to hold the same
-" separation, so they are deeper here than a light-stock theme would use.
+" The stock is newspaper grey — #e3e5e6, a dull light grey rather than an
+" off-white, with only a faint cool cast so it stays distinct from coffee's
+" cream.  The accents are pitched to sit on it: a greyer page needs slightly
+" deeper inks than a near-white one to hold the same separation.
 "
 " Commands are the single warm exception, because they have to pop hardest.
 " Everything else is cool, and `quote` carries its role on low saturation rather
@@ -53,38 +54,38 @@ if empty(globpath(&runtimepath, 'autoload/broadsheet.vim'))
 endif
 
 if &background ==# 'light'
-  " Day edition — cool grey stock.
+  " Day edition — newspaper grey stock.
   let s:palette = {
-        \ 'bg'        : ['#d7dce0', '255'],
-        \ 'bg_alt'    : ['#ccd2d7', '254'],
-        \ 'bg_soft'   : ['#c0c6cc', '253'],
-        \ 'bg_deep'   : ['#aeb5bc', '251'],
+        \ 'bg'        : ['#e3e5e6', '255'],
+        \ 'bg_alt'    : ['#d8dadb', '254'],
+        \ 'bg_soft'   : ['#cccecf', '253'],
+        \ 'bg_deep'   : ['#babdbf', '251'],
         \ 'ink'       : ['#000000', '16'],
-        \ 'ink_soft'  : ['#2f3337', '238'],
-        \ 'ink_mute'  : ['#4e5256', '242'],
-        \ 'ink_faint' : ['#848a8f', '247'],
-        \ 'cmd'       : ['#86102f', '125'],
-        \ 'alert'     : ['#9c2439', '161'],
-        \ 'ref'       : ['#18417f', '25'],
-        \ 'env'       : ['#094a58', '24'],
-        \ 'math'      : ['#155142', '23'],
-        \ 'verb'      : ['#255c2a', '28'],
-        \ 'opt'       : ['#583280', '54'],
-        \ 'quote'     : ['#3f4a55', '59'],
-        \ 'marker'    : ['#bfd0e4', '189'],
-        \ 'marker_hot': ['#8ab8e0', '110'],
+        \ 'ink_soft'  : ['#35393c', '238'],
+        \ 'ink_mute'  : ['#585c60', '242'],
+        \ 'ink_faint' : ['#949a9f', '247'],
+        \ 'cmd'       : ['#951135', '125'],
+        \ 'alert'     : ['#ac283f', '161'],
+        \ 'ref'       : ['#1a488d', '25'],
+        \ 'env'       : ['#0a5262', '24'],
+        \ 'math'      : ['#175a49', '23'],
+        \ 'verb'      : ['#29662e', '28'],
+        \ 'opt'       : ['#62388b', '54'],
+        \ 'quote'     : ['#46525e', '59'],
+        \ 'marker'    : ['#c6d6e8', '189'],
+        \ 'marker_hot': ['#8fbce2', '110'],
         \ 'on_hot'    : ['#000000', '16'],
-        \ 'diff_add'  : ['#c6d6c2', '151'],
-        \ 'diff_chg'  : ['#c5d1dc', '188'],
-        \ 'diff_del'  : ['#e6d4d4', '224'],
-        \ 'diff_txt'  : ['#adc2d6', '152'],
+        \ 'diff_add'  : ['#cedecb', '151'],
+        \ 'diff_chg'  : ['#cdd8e2', '188'],
+        \ 'diff_del'  : ['#ecdcdc', '224'],
+        \ 'diff_txt'  : ['#b4c9dc', '152'],
         \ }
   " On light stock the "bright" half stays dark enough to read on the page.
   let s:ansi = [
-        \ '#000000', '#9c2439', '#255c2a', '#6a5c28',
-        \ '#18417f', '#583280', '#094a58', '#4e5256',
-        \ '#848a8f', '#b8354e', '#31743a', '#847333',
-        \ '#28579c', '#6f4394', '#156a80', '#2f3337',
+        \ '#000000', '#ac283f', '#29662e', '#77682d',
+        \ '#1a488d', '#62388b', '#0a5262', '#585c60',
+        \ '#949a9f', '#c53f57', '#357f3d', '#927f38',
+        \ '#2b5eab', '#7849a1', '#17738b', '#35393c',
         \ ]
 else
   " Late edition — cool ink-stock, the same hues relit for dark.
