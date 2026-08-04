@@ -2,7 +2,8 @@
 " coffee.vim — the warm edition of the Broadsheet newspaper family
 " =============================================================================
 "
-" Brown-based: warm newsprint stock, warm ink, warm accents.  Commands are a
+" Brown-based: warm newsprint stock and warm accents, with pure black body text
+" (the warmth lives in the paper and the inks, not in the type).  Commands are a
 " deep press-red; math sits in a band of ochre.
 "
 "   :set background=light     day edition    (warm newsprint stock)
@@ -33,7 +34,7 @@ if &background ==# 'light'
         \ 'bg_alt'    : ['#ebe7db', '254'],
         \ 'bg_soft'   : ['#e0dbcb', '253'],
         \ 'bg_deep'   : ['#d2ccb8', '251'],
-        \ 'ink'       : ['#1c1a17', '235'],
+        \ 'ink'       : ['#000000', '16'],
         \ 'ink_soft'  : ['#3f3b34', '238'],
         \ 'ink_mute'  : ['#6d675c', '243'],
         \ 'ink_faint' : ['#9a9384', '247'],
@@ -47,7 +48,7 @@ if &background ==# 'light'
         \ 'quote'     : ['#7a5c3e', '95'],
         \ 'marker'    : ['#f2df95', '229'],
         \ 'marker_hot': ['#f0c04a', '221'],
-        \ 'on_hot'    : ['#1c1a17', '235'],
+        \ 'on_hot'    : ['#000000', '16'],
         \ 'diff_add'  : ['#dde7c8', '194'],
         \ 'diff_chg'  : ['#d9e2ec', '189'],
         \ 'diff_del'  : ['#f0d9d4', '224'],
@@ -55,7 +56,7 @@ if &background ==# 'light'
         \ }
   " On light stock the "bright" half stays dark enough to read on paper.
   let s:ansi = [
-        \ '#1c1a17', '#a52019', '#4f5d16', '#7d5f0e',
+        \ '#000000', '#a52019', '#4f5d16', '#7d5f0e',
         \ '#1f4e79', '#70386b', '#2c5f5d', '#6d675c',
         \ '#9a9384', '#c0392b', '#6b7d24', '#a8811a',
         \ '#2d6ca8', '#94508e', '#3d8280', '#3f3b34',

@@ -55,7 +55,7 @@ if &background ==# 'light'
         \ 'bg_alt'    : ['#e5e7e9', '254'],
         \ 'bg_soft'   : ['#d9dcdf', '253'],
         \ 'bg_deep'   : ['#c7cbcf', '251'],
-        \ 'ink'       : ['#191b1d', '235'],
+        \ 'ink'       : ['#000000', '16'],
         \ 'ink_soft'  : ['#3a3e42', '238'],
         \ 'ink_mute'  : ['#62666a', '242'],
         \ 'ink_faint' : ['#a3a7aa', '247'],
@@ -69,7 +69,7 @@ if &background ==# 'light'
         \ 'quote'     : ['#4d5a66', '59'],
         \ 'marker'    : ['#cddced', '189'],
         \ 'marker_hot': ['#93bfe4', '110'],
-        \ 'on_hot'    : ['#191b1d', '235'],
+        \ 'on_hot'    : ['#000000', '16'],
         \ 'diff_add'  : ['#d6e4d2', '151'],
         \ 'diff_chg'  : ['#d5dfe8', '188'],
         \ 'diff_del'  : ['#f2e3e3', '224'],
@@ -77,7 +77,7 @@ if &background ==# 'light'
         \ }
   " On light stock the "bright" half stays dark enough to read on the page.
   let s:ansi = [
-        \ '#191b1d', '#bd2b46', '#2d7033', '#7a6a2e',
+        \ '#000000', '#bd2b46', '#2d7033', '#7a6a2e',
         \ '#1d4f9c', '#6b3d96', '#0b5a6b', '#62666a',
         \ '#a3a7aa', '#d24560', '#3a8a41', '#96843a',
         \ '#2f66b5', '#8253ab', '#1a7c92', '#3a3e42',
