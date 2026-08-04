@@ -106,14 +106,19 @@ Roles, not colors. `cmd` is press-red in coffee and drafting red in graphite;
 
 | role | used for | coffee (light) | graphite (light) |
 |---|---|---|---|
-| `cmd` | commands, headings | `#8c1c13` press-red | `#a3123a` drafting red |
-| `alert` | errors, H3 | `#a52019` | `#bd2b46` |
-| `ref` | refs, citations, links | `#1f4e79` navy | `#1d4f9c` blueprint blue |
-| `env` | environment names | `#2c5f5d` verdigris | `#0b5a6b` cyan |
-| `math` | math zones, numbers | `#7d5f0e` ochre | `#1a6350` teal |
-| `verb` | strings, verbatim | `#4f5d16` olive | `#2d7033` green |
-| `opt` | `[options]`, `#params` | `#70386b` plum | `#6b3d96` violet |
-| `quote` | blockquotes, types, H4–H6 | `#7a5c3e` sepia | `#4d5a66` slate |
+| `cmd` | commands, headings | `#8c1c13` press-red | `#86102f` drafting red |
+| `alert` | errors, H3 | `#a52019` | `#9c2439` |
+| `ref` | refs, citations, links | `#1f4e79` navy | `#18417f` blueprint blue |
+| `env` | environment names | `#2c5f5d` verdigris | `#094a58` cyan |
+| `math` | math zones, numbers | `#7d5f0e` ochre | `#155142` teal |
+| `verb` | strings, verbatim | `#4f5d16` olive | `#255c2a` green |
+| `opt` | `[options]`, `#params` | `#70386b` plum | `#583280` violet |
+| `quote` | blockquotes, types, H4–H6 | `#7a5c3e` sepia | `#3f4a55` slate |
+
+The stocks differ too: coffee's day edition is newsprint cream `#f5f2e9`,
+graphite's is a properly grey `#d7dce0` rather than an off-white. Graphite's
+accents are pitched deeper to match — a darker page needs darker inks to hold
+the same separation. Body text is pure black in both.
 
 The two are designed from different premises rather than being recolors of each
 other. Coffee is weighted to the warm half of the wheel — five of its eight

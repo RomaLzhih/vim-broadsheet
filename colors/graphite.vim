@@ -8,14 +8,18 @@
 " on warm stock.  This one commits to the cool half instead:
 "
 "   role    hue   graphite                    coffee, for contrast
-"   cmd     343°  #a3123a  drafting red       #8c1c13  press-red
-"   alert   349°  #bd2b46  brighter red       #a52019
-"   ref     216°  #1d4f9c  blueprint blue     #1f4e79  navy
-"   env     191°  #0b5a6b  cyan               #2c5f5d  verdigris
-"   math    164°  #1a6350  teal               #7d5f0e  ochre     (was warm)
-"   verb    125°  #2d7033  green              #4f5d16  olive     (was warm)
-"   opt     271°  #6b3d96  violet             #70386b  plum
-"   quote   209°  #4d5a66  slate, 25% sat     #7a5c3e  sepia     (was warm)
+"   cmd     341°  #86102f  drafting red       #8c1c13  press-red
+"   alert   348°  #9c2439  brighter red       #a52019
+"   ref     217°  #18417f  blueprint blue     #1f4e79  navy
+"   env     190°  #094a58  cyan               #2c5f5d  verdigris
+"   math    164°  #155142  teal               #7d5f0e  ochre     (was warm)
+"   verb    125°  #255c2a  green              #4f5d16  olive     (was warm)
+"   opt     272°  #583280  violet             #70386b  plum
+"   quote   209°  #3f4a55  slate, 25% sat     #7a5c3e  sepia     (was warm)
+"
+" The stock is a properly grey #d7dce0, not an off-white.  The accents are
+" pitched to sit on it: a darker page needs darker inks to hold the same
+" separation, so they are deeper here than a light-stock theme would use.
 "
 " Commands are the single warm exception, because they have to pop hardest.
 " Everything else is cool, and `quote` carries its role on low saturation rather
@@ -51,36 +55,36 @@ endif
 if &background ==# 'light'
   " Day edition — cool grey stock.
   let s:palette = {
-        \ 'bg'        : ['#f0f1f2', '255'],
-        \ 'bg_alt'    : ['#e5e7e9', '254'],
-        \ 'bg_soft'   : ['#d9dcdf', '253'],
-        \ 'bg_deep'   : ['#c7cbcf', '251'],
+        \ 'bg'        : ['#d7dce0', '255'],
+        \ 'bg_alt'    : ['#ccd2d7', '254'],
+        \ 'bg_soft'   : ['#c0c6cc', '253'],
+        \ 'bg_deep'   : ['#aeb5bc', '251'],
         \ 'ink'       : ['#000000', '16'],
-        \ 'ink_soft'  : ['#3a3e42', '238'],
-        \ 'ink_mute'  : ['#62666a', '242'],
-        \ 'ink_faint' : ['#a3a7aa', '247'],
-        \ 'cmd'       : ['#a3123a', '125'],
-        \ 'alert'     : ['#bd2b46', '161'],
-        \ 'ref'       : ['#1d4f9c', '25'],
-        \ 'env'       : ['#0b5a6b', '24'],
-        \ 'math'      : ['#1a6350', '23'],
-        \ 'verb'      : ['#2d7033', '28'],
-        \ 'opt'       : ['#6b3d96', '54'],
-        \ 'quote'     : ['#4d5a66', '59'],
-        \ 'marker'    : ['#cddced', '189'],
-        \ 'marker_hot': ['#93bfe4', '110'],
+        \ 'ink_soft'  : ['#2f3337', '238'],
+        \ 'ink_mute'  : ['#4e5256', '242'],
+        \ 'ink_faint' : ['#848a8f', '247'],
+        \ 'cmd'       : ['#86102f', '125'],
+        \ 'alert'     : ['#9c2439', '161'],
+        \ 'ref'       : ['#18417f', '25'],
+        \ 'env'       : ['#094a58', '24'],
+        \ 'math'      : ['#155142', '23'],
+        \ 'verb'      : ['#255c2a', '28'],
+        \ 'opt'       : ['#583280', '54'],
+        \ 'quote'     : ['#3f4a55', '59'],
+        \ 'marker'    : ['#bfd0e4', '189'],
+        \ 'marker_hot': ['#8ab8e0', '110'],
         \ 'on_hot'    : ['#000000', '16'],
-        \ 'diff_add'  : ['#d6e4d2', '151'],
-        \ 'diff_chg'  : ['#d5dfe8', '188'],
-        \ 'diff_del'  : ['#f2e3e3', '224'],
-        \ 'diff_txt'  : ['#bcd0e2', '152'],
+        \ 'diff_add'  : ['#c6d6c2', '151'],
+        \ 'diff_chg'  : ['#c5d1dc', '188'],
+        \ 'diff_del'  : ['#e6d4d4', '224'],
+        \ 'diff_txt'  : ['#adc2d6', '152'],
         \ }
   " On light stock the "bright" half stays dark enough to read on the page.
   let s:ansi = [
-        \ '#000000', '#bd2b46', '#2d7033', '#7a6a2e',
-        \ '#1d4f9c', '#6b3d96', '#0b5a6b', '#62666a',
-        \ '#a3a7aa', '#d24560', '#3a8a41', '#96843a',
-        \ '#2f66b5', '#8253ab', '#1a7c92', '#3a3e42',
+        \ '#000000', '#9c2439', '#255c2a', '#6a5c28',
+        \ '#18417f', '#583280', '#094a58', '#4e5256',
+        \ '#848a8f', '#b8354e', '#31743a', '#847333',
+        \ '#28579c', '#6f4394', '#156a80', '#2f3337',
         \ ]
 else
   " Late edition — cool ink-stock, the same hues relit for dark.
