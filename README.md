@@ -7,7 +7,7 @@ Two themes share one core:
 
 | | | |
 |---|---|---|
-| **coffee** | warm — press-red, ochre, sepia on newsprint cream | light + dark |
+| **coffee** | warm — brick red, ochre, sepia on newsprint cream | light + dark |
 | **graphite** | cool — blueprint blue, cyan, teal, slate on grey stock | light + dark |
 
 ```vim
@@ -101,12 +101,12 @@ faces, but H1 and H2 in particular become harder to tell apart at a glance.
 
 ## Palettes
 
-Roles, not colors. `cmd` is press-red in coffee and burgundy in graphite;
+Roles, not colors. `cmd` is brick red in coffee and burgundy in graphite;
 `math` is ochre in one and teal in the other.
 
 | role | used for | coffee (light) | graphite (light) |
 |---|---|---|---|
-| `cmd` | commands, headings | `#8c1c13` press-red | `#6e1128` burgundy |
+| `cmd` | commands, headings | `#742619` brick red | `#6e1128` burgundy |
 | `alert` | errors, H3 | `#a52019` | `#ac283f` |
 | `ref` | refs, citations, links | `#1f4e79` navy | `#1a488d` blueprint blue |
 | `env` | environment names | `#2c5f5d` verdigris | `#0a5262` cyan |
@@ -128,11 +128,11 @@ accents sit between 300° and 90° — which is what makes it read as printing i
 on warm stock. Graphite commits to the cool half, with `quote` carrying its role
 on low saturation instead of a hue of its own.
 
-Graphite also deliberately keeps commands *quiet*. They are the most frequent
+Both themes deliberately keep commands *quiet*. They are the most frequent
 thing in a `.tex` file, so making them the loudest color turns ordinary prose
-into a field of flashing markup. A deep burgundy stays clearly distinct from body
-text without shouting, and the loud red is reserved for errors — the thing that
-should actually grab you.
+into a field of flashing markup. A deep brick red (coffee) and burgundy (graphite)
+stay clearly distinct from body text without shouting, and the loud red is
+reserved for errors — the thing that should actually grab you.
 
 That also means the two don't share a role→hue assignment. In graphite, green
 goes to strings (the universal convention) and math takes the calmer teal,
