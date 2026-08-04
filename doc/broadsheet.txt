@@ -1,0 +1,200 @@
+*broadsheet.txt*  Newspaper colorschemes for writing LaTeX and Markdown
+
+                                                              *vim-broadsheet*
+                        __                    __         __
+              |__) |__)/  \  /\  |  \ /__` |__|  |__  |__  |
+              |__) |  \\__/ /~~\ |__/ .__/ |  |__|___ |___ |
+
+==============================================================================
+CONTENTS                                                  *broadsheet-contents*
+
+    1. Introduction ........................... |broadsheet-introduction|
+    2. Usage .................................. |broadsheet-usage|
+    3. Options ................................ |broadsheet-options|
+    4. Design ................................. |broadsheet-design|
+    5. Palette roles .......................... |broadsheet-roles|
+    6. Adding a theme ......................... |broadsheet-adding|
+    7. Coverage ............................... |broadsheet-coverage|
+    8. Notes and caveats ...................... |broadsheet-notes|
+
+==============================================================================
+1. INTRODUCTION                                       *broadsheet-introduction*
+
+vim-broadsheet is a pair of colorschemes tuned for writing prose -- LaTeX and
+Markdown -- rather than for reading code.
+
+    coffee      warm: press-red, ochre, sepia on newsprint cream
+    graphite    cool: oxblood, brass, steel on grey stock
+
+Each ships a light "day edition" and a dark "late edition", selected with
+'background'.  Both are driven by a shared core in autoload/broadsheet.vim, so
+a theme file contains nothing but a palette.
+
+Requires a truecolor terminal ('termguicolors').  Every group also carries a
+256-color value, so the schemes degrade rather than break.
+
+==============================================================================
+2. USAGE                                                     *broadsheet-usage*
+
+>
+    set termguicolors
+    set background=light
+    colorscheme coffee
+<
+Switch editions at any time: >
+
+    :set background=light     " day edition
+    :set background=dark      " late edition
+<
+A toggle mapping, which also works with any other dual-background scheme: >
+
+    nnoremap <Leader>tb :let &background =
+          \ (&background ==# 'dark' ? 'light' : 'dark')<CR>
+<
+==============================================================================
+3. OPTIONS                                                 *broadsheet-options*
+
+                                                          *g:broadsheet_bold*
+g:broadsheet_bold                                       (default: 1)
+        When 0, every bold attribute the theme sets is dropped -- including the
+        weight on \textbf{} content -- while italics and underlines are left
+        untouched. >
+
+            let g:broadsheet_bold = 0
+<
+        Set it before |:colorscheme|, or re-run :colorscheme after changing it.
+
+        Note the tradeoff: the design uses weight as one of its two hierarchy
+        cues, so with bold off, headings and commands are separated by hue
+        alone.  The page reads calmer and flatter, but H1 and H2 in particular
+        become harder to tell apart at a glance.
+
+==============================================================================
+4. DESIGN                                                   *broadsheet-design*
+
+A newspaper carries hierarchy through weight and hue separation, not
+saturation.  The prose reads as ink on paper; the markup around it is a
+different category at a glance without ever shouting.
+
+The governing rule is: DELIMITERS RECEDE, CONTENT ADVANCES.
+>
+    \section{Market Turbulence}      \section    cmd, bold
+                                     title text  ink, bold  (a headline)
+    \begin{equation}\label{eq:cap}   \begin\end  cmd, bold
+      \alpha_t = \beta \cdot r       {equation}  env, bold
+    \end{equation}                   eq:cap      ref, underline
+                                     \alpha      math
+    As \citet{fama1970} shows.       fama1970    ref, underline
+    % TODO: rerun with 2024 data     comment     ink_mute, italic
+                                     { } braces  ink_faint, near-invisible
+<
+Braces and delimiters fall back to a faint gray while the prose inside {...}
+keeps full ink.  With |g:vimtex_syntax_conceal_disable| set, where every brace
+is literally on screen, that inversion is what makes a .tex file read as a page
+rather than as syntax.
+
+Content inside \textbf{} and \textit{} gains weight or slant but no color, so
+emphasis still reads as prose.
+
+==============================================================================
+5. PALETTE ROLES                                             *broadsheet-roles*
+
+Palette keys are ROLES, not colors: `cmd` is press-red in coffee and oxblood in
+graphite.  Each value is a [gui_hex, cterm256] pair.
+
+Paper stock, four steps:                bg  bg_alt  bg_soft  bg_deep
+Ink, four weights:                      ink  ink_soft  ink_mute  ink_faint
+
+    cmd      commands, headings
+    alert    errors, H3
+    ref      references, citations, links, functions
+    env      environment names, preprocessor
+    verb     strings, verbatim, code fences
+    math     math zones, numbers
+    opt      [options], #params
+    quote    blockquotes, types, H4-H6
+
+    marker      search fill
+    marker_hot  incremental-search fill
+    on_hot      foreground laid over marker_hot; flips per edition so the live
+                match stays the brightest mark on the page
+
+    diff_add  diff_chg  diff_del  diff_txt
+
+`ink_faint` is deliberately below WCAG AA.  It exists for brace glyphs,
+hairline rules and whitespace markers that must be barely there -- never for
+text.  Every other text-bearing pair is at AA or better.
+
+==============================================================================
+6. ADDING A THEME                                           *broadsheet-adding*
+
+autoload/broadsheet.vim holds every highlight-group assignment.  To retune an
+existing theme, edit only the palette in its colors/*.vim file.
+
+To add a third theme, copy one of the existing palettes, change the values, and
+call: >
+
+    call broadsheet#apply('yourname', s:palette, s:ansi)
+<
+No change to the core is required.  The full palette contract is documented at
+the top of autoload/broadsheet.vim.
+
+                                                          *broadsheet#apply()*
+broadsheet#apply({name}, {palette}, {ansi})
+        Clear highlighting, set |g:colors_name| to {name}, and emit every group
+        from {palette}.  {ansi} is a 16-element list of gui colors assigned to
+        |g:terminal_ansi_colors|.
+
+==============================================================================
+7. COVERAGE                                               *broadsheet-coverage*
+
+LaTeX          vimtex 2.x.  Child groups are restated by the core, so
+               highlighting survives a :colorscheme switch without reloading
+               the buffer -- `hi clear` would otherwise wipe vimtex's own
+               `hi def link` defaults until the syntax script is re-sourced.
+
+Markdown       vim-markdown (mkd*/html*) and Vim's built-in markdown* groups,
+               so the page looks right with either active.  H1-H6 descend.
+
+Prose          reStructuredText, gitcommit, help, mail, BibTeX.
+
+Plugins        coc.nvim (including CocSemType* semantic tokens), fzf, startify,
+               easymotion, signify, floaterm, which-key, visual-multi,
+               signature, bookmarks.
+
+Terminal       A matching 16-color ANSI palette via |g:terminal_ansi_colors|.
+
+==============================================================================
+8. NOTES AND CAVEATS                                         *broadsheet-notes*
+
+                                                        *broadsheet-at-groups*
+Treesitter-style @-groups are intentionally NOT defined.  coc.nvim asks for
+them first (its map reads ['@function', 'Function']), but Vim -- unlike Neovim
+-- permits only alphanumerics and underscore in a highlight group name, so
+defining `@function` or `@markup.link.url` raises: >
+
+    W18: Invalid character in group name
+<
+on every colorscheme load.  coc's fallback to the classic groups is the correct
+path in Vim.
+
+                                                        *broadsheet-completion*
+The selected completion row (|hl-PmenuSel|, and coc's CocMenuSel) uses a paper
+step rather than a filled accent block.  A solid navy bar is the heaviest thing
+on an otherwise light page; the fuzzy-matched characters keep the accent
+instead, which is the part that needs to pop.
+
+                                                          *broadsheet-signify*
+If your vimrc hardcodes SignifySign* colors from a `ColorScheme *` autocmd,
+they will override the theme's.  Guard the function with: >
+
+    if get(g:, 'colors_name', '') =~# 'coffee\|graphite' | return | endif
+<
+                                                            *broadsheet-cocsem*
+coc.nvim builds its semantic groups as CocSemType<Kind> and
+CocSemTypeMod<Kind><Modifier>.  A bare `CocSemFunction` is from an older coc
+and is never consulted.  The core defines the correct names so they survive
+`hi clear` on a colorscheme switch.
+
+==============================================================================
+vim:tw=78:ts=8:noet:ft=help:norl:
