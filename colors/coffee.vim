@@ -4,13 +4,7 @@
 "
 " Brown-based: warm newsprint stock and warm accents, with pure black body text
 " (the warmth lives in the paper and the inks, not in the type).  Commands are a
-" deep brick red; math sits in a band of ochre.
-"
-" The command red is deliberately restrained.  Commands are the most frequent
-" thing in a .tex file, so the loudest colour on the page is the wrong place for
-" them — chroma in Lab is the useful measure, and #742619 sits at 43 where the
-" original #8c1c13 was at 58.  `alert` keeps the louder red (chroma 65), since
-" errors are what should actually grab you.
+" deep press-red; math sits in a band of ochre.
 "
 "   :set background=light     day edition    (warm newsprint stock)
 "   :set background=dark      late edition   (press ink-stock)
@@ -44,7 +38,7 @@ if &background ==# 'light'
         \ 'ink_soft'  : ['#3f3b34', '238'],
         \ 'ink_mute'  : ['#6d675c', '243'],
         \ 'ink_faint' : ['#9a9384', '247'],
-        \ 'cmd'       : ['#742619', '88'],
+        \ 'cmd'       : ['#8c1c13', '88'],
         \ 'alert'     : ['#a52019', '124'],
         \ 'ref'       : ['#1f4e79', '24'],
         \ 'env'       : ['#2c5f5d', '23'],
@@ -78,7 +72,7 @@ else
         \ 'ink_soft'  : ['#b8b2a2', '145'],
         \ 'ink_mute'  : ['#918b7d', '102'],
         \ 'ink_faint' : ['#5c5a52', '59'],
-        \ 'cmd'       : ['#d59a8e', '174'],
+        \ 'cmd'       : ['#e08b7d', '174'],
         \ 'alert'     : ['#d4776a', '167'],
         \ 'ref'       : ['#7fa9d0', '110'],
         \ 'env'       : ['#79b3aa', '73'],

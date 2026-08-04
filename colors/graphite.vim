@@ -12,8 +12,8 @@
 "   alert   348°  #ac283f  red                #a52019
 "   ref     217°  #1a488d  blueprint blue     #1f4e79  navy
 "   env     190°  #0a5262  cyan               #2c5f5d  verdigris
-"   math    164°  #175a49  teal               #7d5f0e  ochre     (was warm)
-"   verb    125°  #29662e  green              #4f5d16  olive     (was warm)
+"   math    125°  #256b2c  green              #7d5f0e  ochre     (was warm)
+"   verb    164°  #0d6b52  teal               #4f5d16  olive     (was warm)
 "   opt     272°  #62388b  violet             #70386b  plum
 "   quote   209°  #46525e  slate, 25% sat     #7a5c3e  sepia     (was warm)
 "
@@ -36,11 +36,17 @@
 " Everything else is cool, and `quote` carries its role on low saturation rather
 " than on a hue of its own — the native logic for a grey theme.
 "
-" Note math and verb are NOT coffee's slots re-lit: green goes to strings (the
-" universal convention) and math takes the calmer teal, because a math zone is a
-" large band of text and wants the quieter colour.  The cool half of the wheel
+" Note math and verb are NOT coffee's slots re-lit.  The cool half of the wheel
 " only fits four or five well-separated hues, so the assignment had to change
 " rather than just the values.
+"
+" math takes the green and verb the teal, which inverts the usual editor
+" convention of green-for-strings.  That is deliberate: this is a theme for
+" writing LaTeX, where math zones are a constant presence and lstlisting blocks
+" are rare, so math earns the more visible hue.  The teal it used to hold sat at
+" chroma 26 — the second-least chromatic thing in the palette — and read as dark
+" rather than as a colour, which made \times and friends easy to miss.  The
+" green is at 44.
 "
 "   :set background=light     day edition    (cool grey stock)
 "   :set background=dark      late edition   (cool ink-stock)
@@ -78,8 +84,8 @@ if &background ==# 'light'
         \ 'alert'     : ['#ac283f', '161'],
         \ 'ref'       : ['#1a488d', '25'],
         \ 'env'       : ['#0a5262', '24'],
-        \ 'math'      : ['#175a49', '23'],
-        \ 'verb'      : ['#29662e', '28'],
+        \ 'math'      : ['#256b2c', '23'],
+        \ 'verb'      : ['#0d6b52', '28'],
         \ 'opt'       : ['#62388b', '54'],
         \ 'quote'     : ['#46525e', '59'],
         \ 'marker'    : ['#c6d6e8', '189'],
@@ -92,9 +98,9 @@ if &background ==# 'light'
         \ }
   " On light stock the "bright" half stays dark enough to read on the page.
   let s:ansi = [
-        \ '#000000', '#ac283f', '#29662e', '#77682d',
+        \ '#000000', '#ac283f', '#256b2c', '#77682d',
         \ '#1a488d', '#62388b', '#0a5262', '#585c60',
-        \ '#949a9f', '#c53f57', '#357f3d', '#927f38',
+        \ '#949a9f', '#c53f57', '#2f8237', '#927f38',
         \ '#2b5eab', '#7849a1', '#17738b', '#35393c',
         \ ]
 else
@@ -112,8 +118,8 @@ else
         \ 'alert'     : ['#e8697f', '204'],
         \ 'ref'       : ['#7fa8e8', '111'],
         \ 'env'       : ['#56b8cf', '80'],
-        \ 'math'      : ['#5fbfa8', '79'],
-        \ 'verb'      : ['#7ec97e', '114'],
+        \ 'math'      : ['#7ec97e', '79'],
+        \ 'verb'      : ['#5fbfa8', '114'],
         \ 'opt'       : ['#b189e8', '141'],
         \ 'quote'     : ['#9fb0bd', '145'],
         \ 'marker'    : ['#2b3b4a', '23'],

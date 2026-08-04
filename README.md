@@ -7,8 +7,8 @@ Two themes share one core:
 
 | | | |
 |---|---|---|
-| **coffee** | warm — brick red, ochre, sepia on newsprint cream | light + dark |
-| **graphite** | cool — blueprint blue, cyan, teal, slate on grey stock | light + dark |
+| **coffee** | warm — press-red, ochre, sepia on newsprint cream | light + dark |
+| **graphite** | cool — burgundy, blueprint blue, cyan, slate on grey stock | light + dark |
 
 ```vim
 :colorscheme coffee
@@ -101,17 +101,17 @@ faces, but H1 and H2 in particular become harder to tell apart at a glance.
 
 ## Palettes
 
-Roles, not colors. `cmd` is brick red in coffee and burgundy in graphite;
-`math` is ochre in one and teal in the other.
+Roles, not colors. `cmd` is press-red in coffee and burgundy in graphite;
+`math` is ochre in one and green in the other.
 
 | role | used for | coffee (light) | graphite (light) |
 |---|---|---|---|
-| `cmd` | commands, headings | `#742619` brick red | `#6e1128` burgundy |
+| `cmd` | commands, headings | `#8c1c13` press-red | `#6e1128` burgundy |
 | `alert` | errors, H3 | `#a52019` | `#ac283f` |
 | `ref` | refs, citations, links | `#1f4e79` navy | `#1a488d` blueprint blue |
 | `env` | environment names | `#2c5f5d` verdigris | `#0a5262` cyan |
-| `math` | math zones, numbers | `#7d5f0e` ochre | `#175a49` teal |
-| `verb` | strings, verbatim | `#4f5d16` olive | `#29662e` green |
+| `math` | math zones, numbers | `#7d5f0e` ochre | `#256b2c` green |
+| `verb` | strings, verbatim | `#4f5d16` olive | `#0d6b52` teal |
 | `opt` | `[options]`, `#params` | `#70386b` plum | `#62388b` violet |
 | `quote` | blockquotes, types, H4–H6 | `#7a5c3e` sepia | `#46525e` slate |
 
@@ -128,17 +128,14 @@ accents sit between 300° and 90° — which is what makes it read as printing i
 on warm stock. Graphite commits to the cool half, with `quote` carrying its role
 on low saturation instead of a hue of its own.
 
-Both themes deliberately keep commands *quiet*. They are the most frequent
-thing in a `.tex` file, so making them the loudest color turns ordinary prose
-into a field of flashing markup. A deep brick red (coffee) and burgundy (graphite)
-stay clearly distinct from body text without shouting, and the loud red is
-reserved for errors — the thing that should actually grab you.
+That also means the two don't share a role→hue assignment. The cool half of the
+wheel only fits four or five well-separated hues, so graphite's assignment had
+to change, not just the values.
 
-That also means the two don't share a role→hue assignment. In graphite, green
-goes to strings (the universal convention) and math takes the calmer teal,
-because a math zone is a large band of text and wants the quieter color. The
-cool half of the wheel only fits four or five well-separated hues, so the
-assignment had to change, not just the values.
+In graphite, `math` takes the green and `verb` the teal, inverting the usual
+green-for-strings convention. That is deliberate: this is a theme for writing
+LaTeX, where math zones are a constant presence and `lstlisting` blocks are
+rare, so math earns the more visible hue.
 
 Paper and ink are four steps each: `bg` / `bg_alt` / `bg_soft` / `bg_deep` and
 `ink` / `ink_soft` / `ink_mute` / `ink_faint`.
