@@ -8,7 +8,7 @@
 " on warm stock.  This one commits to the cool half instead:
 "
 "   role    hue   graphite                    coffee, for contrast
-"   cmd     330°  #662344  deep plum          #8c1c13  press-red
+"   cmd     345°  #6e1128  burgundy           #8c1c13  press-red
 "   alert   348°  #ac283f  red                #a52019
 "   ref     217°  #1a488d  blueprint blue     #1f4e79  navy
 "   env     190°  #0a5262  cyan               #2c5f5d  verdigris
@@ -22,11 +22,16 @@
 " cream.  The accents are pitched to sit on it: a greyer page needs slightly
 " deeper inks than a near-white one to hold the same separation.
 "
-" Commands are a deep plum, not a bright red.  They are the most frequent thing
-" in a .tex file, so making them the loudest colour on the page is a mistake —
-" it turns ordinary prose into a field of flashing markup.  They stay clearly
-" distinct from body text and from `alert`, but they no longer shout; the loud
-" red is reserved for errors, which is the thing that should actually grab you.
+" Commands are a deep burgundy, not a bright red.  They are the most frequent
+" thing in a .tex file, so making them the loudest colour on the page is a
+" mistake — it turns ordinary prose into a field of flashing markup.
+"
+" The depth matters more than the hue here.  Chroma in Lab is the useful
+" measure: the bright red this replaced sits at 55, and a classic burgundy
+" (#800020) at 53 — barely calmer, so it would shout just as much.  #6e1128 is
+" at 42, dark enough to settle while still reading as wine rather than as ink.
+" The loud red is reserved for `alert`, which is the thing that should actually
+" grab you.
 "
 " Everything else is cool, and `quote` carries its role on low saturation rather
 " than on a hue of its own — the native logic for a grey theme.
@@ -69,7 +74,7 @@ if &background ==# 'light'
         \ 'ink_soft'  : ['#35393c', '238'],
         \ 'ink_mute'  : ['#585c60', '242'],
         \ 'ink_faint' : ['#949a9f', '247'],
-        \ 'cmd'       : ['#662344', '89'],
+        \ 'cmd'       : ['#6e1128', '89'],
         \ 'alert'     : ['#ac283f', '161'],
         \ 'ref'       : ['#1a488d', '25'],
         \ 'env'       : ['#0a5262', '24'],
@@ -103,7 +108,7 @@ else
         \ 'ink_soft'  : ['#a8aeb3', '145'],
         \ 'ink_mute'  : ['#848a90', '102'],
         \ 'ink_faint' : ['#565c62', '59'],
-        \ 'cmd'       : ['#d497b1', '175'],
+        \ 'cmd'       : ['#d78fa0', '175'],
         \ 'alert'     : ['#e8697f', '204'],
         \ 'ref'       : ['#7fa8e8', '111'],
         \ 'env'       : ['#56b8cf', '80'],

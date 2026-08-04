@@ -101,12 +101,12 @@ faces, but H1 and H2 in particular become harder to tell apart at a glance.
 
 ## Palettes
 
-Roles, not colors. `cmd` is press-red in coffee and deep plum in graphite;
+Roles, not colors. `cmd` is press-red in coffee and burgundy in graphite;
 `math` is ochre in one and teal in the other.
 
 | role | used for | coffee (light) | graphite (light) |
 |---|---|---|---|
-| `cmd` | commands, headings | `#8c1c13` press-red | `#662344` deep plum |
+| `cmd` | commands, headings | `#8c1c13` press-red | `#6e1128` burgundy |
 | `alert` | errors, H3 | `#a52019` | `#ac283f` |
 | `ref` | refs, citations, links | `#1f4e79` navy | `#1a488d` blueprint blue |
 | `env` | environment names | `#2c5f5d` verdigris | `#0a5262` cyan |
@@ -130,7 +130,7 @@ on low saturation instead of a hue of its own.
 
 Graphite also deliberately keeps commands *quiet*. They are the most frequent
 thing in a `.tex` file, so making them the loudest color turns ordinary prose
-into a field of flashing markup. A deep plum stays clearly distinct from body
+into a field of flashing markup. A deep burgundy stays clearly distinct from body
 text without shouting, and the loud red is reserved for errors — the thing that
 should actually grab you.
 
