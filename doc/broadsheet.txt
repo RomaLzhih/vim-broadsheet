@@ -12,23 +12,34 @@ CONTENTS                                                  *broadsheet-contents*
     2. Usage .................................. |broadsheet-usage|
     3. Options ................................ |broadsheet-options|
     4. Design ................................. |broadsheet-design|
-    5. Palette roles .......................... |broadsheet-roles|
-    6. Adding a theme ......................... |broadsheet-adding|
-    7. Coverage ............................... |broadsheet-coverage|
-    8. Notes and caveats ...................... |broadsheet-notes|
+    5. Profiles ............................... |broadsheet-profile|
+    6. Palette roles .......................... |broadsheet-roles|
+    7. Adding a theme ......................... |broadsheet-adding|
+    8. Coverage ............................... |broadsheet-coverage|
+    9. Notes and caveats ...................... |broadsheet-notes|
 
 ==============================================================================
 1. INTRODUCTION                                       *broadsheet-introduction*
 
-vim-broadsheet is a pair of colorschemes tuned for writing prose -- LaTeX and
-Markdown -- rather than for reading code.
+vim-broadsheet is five colorschemes: two tuned for writing prose -- LaTeX and
+Markdown -- rather than for reading code, and three tuned for the opposite.
 
     coffee      warm: press-red, ochre, sepia on newsprint cream
-    graphite    cool: oxblood, brass, steel on grey stock
+    graphite    cool: burgundy, blueprint blue, cyan, slate on grey stock
+    tokyonight  the Tokyo Night palette, pitched at source code
+    vga         the IBM PC's sixteen on true black; the intensity bit does
+                the work bold used to do
+    phosphor    CRT terminal: P39 green glow and the IBM 3279's colours,
+                with the VT220's P3 amber on the preprocessor
 
-Each ships a light "day edition" and a dark "late edition", selected with
-'background'.  Both are driven by a shared core in autoload/broadsheet.vim, so
-a theme file contains nothing but a palette.
+The first three each ship a light "day edition" and a dark "late edition",
+selected with 'background'.  Both retro themes are dark-only -- a CRT has no
+day edition -- and each of those files sets 'background' to dark itself.  All
+five are driven by a shared core in autoload/broadsheet.vim, so a theme file
+contains nothing but a palette.
+
+The prose pair were drawn for paper and lead with their light edition;
+tokyonight was drawn for a dark screen and leads with its dark one.
 
 Requires a truecolor terminal ('termguicolors').  Every group also carries a
 256-color value, so the schemes degrade rather than break.
@@ -39,7 +50,7 @@ Requires a truecolor terminal ('termguicolors').  Every group also carries a
 >
     set termguicolors
     set background=light
-    colorscheme coffee
+    colorscheme coffee        " or graphite, or tokyonight
 <
 Switch editions at any time: >
 
@@ -50,6 +61,12 @@ A toggle mapping, which also works with any other dual-background scheme: >
 
     nnoremap <Leader>tb :let &background =
           \ (&background ==# 'dark' ? 'light' : 'dark')<CR>
+<
+Both retro themes ignore 'background' -- each applies its one dark palette and
+sets the option itself, guarded so the re-source Vim triggers on a
+'background' change cannot loop: >
+
+    colorscheme vga           " or phosphor
 <
 ==============================================================================
 3. OPTIONS                                                 *broadsheet-options*
@@ -67,7 +84,13 @@ g:broadsheet_bold                                       (default: 1)
         Note the tradeoff: the design uses weight as one of its two hierarchy
         cues, so with bold off, headings and commands are separated by hue
         alone.  The page reads calmer and flatter, but H1 and H2 in particular
-        become harder to tell apart at a glance.
+        become harder to tell apart at a glance, and in LaTeX \times stops
+        standing out from the math around it.
+
+        The switch only ever removes weight, never adds it, so it does nothing
+        to the code themes -- tokyonight, vga and phosphor declare
+        'bold': 0 for themselves and carry none to begin with.  See
+        |broadsheet-weight|.
 
 ==============================================================================
 4. DESIGN                                                   *broadsheet-design*
@@ -97,7 +120,55 @@ Content inside \textbf{} and \textit{} gains weight or slant but no color, so
 emphasis still reads as prose.
 
 ==============================================================================
-5. PALETTE ROLES                                             *broadsheet-roles*
+5. PROFILES                                                *broadsheet-profile*
+
+The rule above is a rule about a page of prose, and four of the assignments it
+implies do not survive contact with a source file.  A theme declares which set
+it wants by passing a profile to |broadsheet#apply()|:
+
+    'prose'   the default.  coffee and graphite.
+    'code'    tokyonight, vga, phosphor.
+
+Only these four groups differ.  Everything else in the core is unconditional.
+>
+    group               prose                  code
+    ------------------------------------------------------------------
+    Delimiter           ink_faint, a hairline  ink_soft, operator weight
+    Identifier          ink_soft               ink, full weight
+    Function            ref, bold              ref, no bold
+    CocSemTypeBracket   undefined              follows Delimiter
+<
+Operator moves too, but on a different lever, so it is not in the table: it
+takes the optional `oper` palette key when the theme supplies one and the
+secondary ink when it does not.  See |broadsheet-roles|.
+
+In a .tex file the braces are noise wrapped around the prose and belong at the
+hairline.  In R, `,` and `;` ARE the argument list; in shell, `()` is the
+function.  Punctuation is structure in a source file, so it reads at operator
+weight -- quiet, but never something you have to hunt for.
+
+Delimiters recede and content advances either way.  What changes is what counts
+as content: in a source file it is the identifiers, so they take full ink.
+
+Function names are open-ended and on every other line, so bolding them is noise
+rather than hierarchy; the hue alone carries them.
+
+                                                              *broadsheet-weight*
+The profile says nothing about weight -- that is a separate option, and a theme
+can drop bold entirely by passing 'bold': 0 to |broadsheet#apply()|.  All four
+code themes do; the retro pair has the era's excuse that text mode had
+brightness, not weight.
+
+The prose themes hang hierarchy on two cues, weight and hue, because a .tex file
+is prose with markup laid over it and the markup has to separate from the type.
+A source file has no prose in it -- every line is already markup -- so weight
+stops being a signal and turns into texture; thirty bold keywords to a screen is
+a page that shouts evenly.  Hue carries the whole hierarchy there.
+
+Italics, underlines and undercurls are untouched either way.
+
+==============================================================================
+6. PALETTE ROLES                                             *broadsheet-roles*
 
 Palette keys are ROLES, not colors: `cmd` is press-red in coffee and oxblood in
 graphite.  Each value is a [gui_hex, cterm256] pair.
@@ -105,14 +176,35 @@ graphite.  Each value is a [gui_hex, cterm256] pair.
 Paper stock, four steps:                bg  bg_alt  bg_soft  bg_deep
 Ink, four weights:                      ink  ink_soft  ink_mute  ink_faint
 
-    cmd      commands, headings
+    cmd      commands, headings, keywords
     alert    errors, H3
     ref      references, citations, links, functions
-    env      environment names, preprocessor
+    env      environment names, preprocessor, shell variables
     verb     strings, verbatim, code fences
-    math     math zones, numbers
-    opt      [options], #params
+    math     math zones, numbers, escapes
+    opt      [options], #params, constants, properties
     quote    blockquotes, types, H4-H6
+
+Four keys are OPTIONAL.  Each is conditional on the palette, not on the
+profile, so any theme can opt in; omitted, each falls back to the role that
+carried the group before the key existed:
+
+    oper     operators; falls back to the secondary ink, which is what a
+             prose theme wants -- a .tex file has almost none in it.  A
+             source file has them on every line.
+    struct   Structure and Typedef -- class, struct, template, namespace,
+             typedef; falls back to `quote`.  Splits the shape-declaring
+             keywords from the types they declare, the way jellybeans does.
+             Python's built-in exception names (KeyError) land here too.
+    storage  StorageClass -- static, const, extern; falls back to `quote`.
+             Qualifiers read as constant-machinery rather than as types.
+    except   Exception -- try, catch, throw, raise; falls back to `cmd`, so
+             the danger keywords can wear the alarm colour.
+
+Both retro themes supply all four, which is what gives a C++ buffer its
+five-way keyword split: control flow on cmd, types on quote, shape
+declarations on struct, qualifiers on storage, and throw/try/catch on the
+alarm colour.
 
     marker      search fill
     marker_hot  incremental-search fill
@@ -126,27 +218,37 @@ hairline rules and whitespace markers that must be barely there -- never for
 text.  Every other text-bearing pair is at AA or better.
 
 ==============================================================================
-6. ADDING A THEME                                           *broadsheet-adding*
+7. ADDING A THEME                                           *broadsheet-adding*
 
 autoload/broadsheet.vim holds every highlight-group assignment.  To retune an
 existing theme, edit only the palette in its colors/*.vim file.
 
-To add a third theme, copy one of the existing palettes, change the values, and
-call: >
+To add another theme, copy one of the existing palettes, change the values,
+and call: >
 
     call broadsheet#apply('yourname', s:palette, s:ansi)
+    call broadsheet#apply('yourname', s:palette, s:ansi, {'profile': 'code'})
 <
-No change to the core is required.  The full palette contract is documented at
-the top of autoload/broadsheet.vim.
+No change to the core is required either way.  The full palette contract is
+documented at the top of autoload/broadsheet.vim.
 
                                                           *broadsheet#apply()*
-broadsheet#apply({name}, {palette}, {ansi})
+broadsheet#apply({name}, {palette}, {ansi} [, {opts}])
         Clear highlighting, set |g:colors_name| to {name}, and emit every group
         from {palette}.  {ansi} is a 16-element list of gui colors assigned to
         |g:terminal_ansi_colors|.
 
+        {opts} is an optional dictionary with two keys:
+
+            'profile'   'prose' (the default) or 'code'.
+                        See |broadsheet-profile|.
+            'bold'      1 (the default) or 0.  0 drops every bold attribute
+                        the theme would set, the same treatment
+                        |g:broadsheet_bold| gives on the reader's side.
+                        See |broadsheet-weight|.
+
 ==============================================================================
-7. COVERAGE                                               *broadsheet-coverage*
+8. COVERAGE                                               *broadsheet-coverage*
 
 LaTeX          vimtex 2.x.  Child groups are restated by the core, so
                highlighting survives a :colorscheme switch without reloading
@@ -158,6 +260,12 @@ Markdown       vim-markdown (mkd*/html*) and Vim's built-in markdown* groups,
 
 Prose          reStructuredText, gitcommit, help, mail, BibTeX.
 
+Source         C/C++, shell, Python and R are covered through the standard
+               groups their syntax files link to, checked token by token
+               against real files in both editions.  Anything else Vim ships
+               is covered to the same degree.  See |broadsheet-c| and
+               |broadsheet-python| for two upstream quirks worth knowing.
+
 Plugins        coc.nvim (including CocSemType* semantic tokens), fzf, startify,
                easymotion, signify, floaterm, which-key, visual-multi,
                signature, bookmarks.
@@ -165,7 +273,7 @@ Plugins        coc.nvim (including CocSemType* semantic tokens), fzf, startify,
 Terminal       A matching 16-color ANSI palette via |g:terminal_ansi_colors|.
 
 ==============================================================================
-8. NOTES AND CAVEATS                                         *broadsheet-notes*
+9. NOTES AND CAVEATS                                         *broadsheet-notes*
 
                                                         *broadsheet-at-groups*
 Treesitter-style @-groups are intentionally NOT defined.  coc.nvim asks for
@@ -188,13 +296,51 @@ instead, which is the part that needs to pop.
 If your vimrc hardcodes SignifySign* colors from a `ColorScheme *` autocmd,
 they will override the theme's.  Guard the function with: >
 
-    if get(g:, 'colors_name', '') =~# 'coffee\|graphite' | return | endif
+    if get(g:, 'colors_name', '')
+          \ =~# 'coffee\|graphite\|tokyonight\|vga\|phosphor'
+      return
+    endif
 <
+                                                                *broadsheet-c*
+Vim's c.vim gates cFunction behind a syntax option, so a C or C++ call is plain
+text until you set it.  A colorscheme has no business setting a syntax option,
+so set it yourself: >
+
+    let c_functions = 1
+<
+Not needed if coc.nvim is supplying CocSemTypeFunction, which the core maps.
+
+                                                           *broadsheet-python*
+Vim's python.vim force-links pythonBoolean and pythonConstant to Function with
+`hi! def link`, so True, False and None come out looking like a call to open()
+or len().  The `!` overrides even a full definition made by a colorscheme, and
+the syntax script is sourced after the colorscheme, so this cannot be fixed
+from here.  To fix it for yourself, in ~/.vim/after/syntax/python.vim: >
+
+    hi! link pythonBoolean  Boolean
+    hi! link pythonConstant Constant
+<
+r.vim's equivalent -- rAssign linked to Statement, which paints every `<-` and
+every named argument's `=` in the loudest colour in the palette -- uses a plain
+`hi def link`, so the core does correct that one.
+
                                                             *broadsheet-cocsem*
 coc.nvim builds its semantic groups as CocSemType<Kind> and
-CocSemTypeMod<Kind><Modifier>.  A bare `CocSemFunction` is from an older coc
-and is never consulted.  The core defines the correct names so they survive
-`hi clear` on a colorscheme switch.
+CocSemTypeMod<Kind><Modifier>, upper-casing only the first character of each
+part -- so it is EnumMember and Readonly, not Enummember or ReadOnly.  A bare
+`CocSemFunction` is from an older coc and is never consulted.  The core defines
+the correct names so they survive `hi clear` on a colorscheme switch.
+
+Const and other read-only symbols take the Number colour, which is also what
+constants and enum members get: >
+
+    CocSemTypeModVariableReadonly    CocSemTypeModPropertyReadonly
+    CocSemTypeModParameterReadonly   CocSemTypeModEnumMemberReadonly
+<
+coc emits a token with modifiers twice -- the plain kind, then the
+kind+modifier -- and only for the FIRST modifier the server sends.  clangd
+lists `declaration` ahead of `readonly`, so the line that declares a const
+keeps the base colour while every use of it takes the Number colour.
 
 ==============================================================================
 vim:tw=78:ts=8:noet:ft=help:norl:

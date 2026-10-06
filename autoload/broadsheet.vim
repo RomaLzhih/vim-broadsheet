@@ -3,8 +3,9 @@
 " =============================================================================
 "
 " Every highlight-group assignment for the family lives here.  A theme is just a
-" palette: colors/coffee.vim and colors/graphite.vim each define one and hand it
-" to broadsheet#apply().  Fix a group here and both themes inherit the fix.
+" palette: colors/coffee.vim, colors/graphite.vim and colors/tokyonight.vim each
+" define one and hand it to broadsheet#apply().  Fix a group here and every
+" theme inherits the fix.
 "
 " Design — "Broadsheet":  markup recedes, prose advances.
 "
@@ -14,8 +15,9 @@
 "   saturation.
 "
 " Palette contract — a theme must supply every key below as [gui_hex, cterm256].
-" The names are ROLES, not colors: `cmd` is press-red in coffee and oxblood in
-" graphite; `math` is ochre in one and brass in the other.
+" The names are ROLES, not colors: `cmd` is press-red in coffee, burgundy in
+" graphite and magenta in tokyonight; `math` is ochre in one and orange in
+" another.
 "
 "   bg  bg_alt  bg_soft  bg_deep        the paper stock, four steps
 "   ink  ink_soft  ink_mute  ink_faint  the ink, four weights.  ink_faint is
@@ -27,6 +29,20 @@
 "   verb   strings, verbatim        math   math zones, numbers
 "   opt    [options], #params       quote  blockquotes, types, H4-H6
 "
+"   Optional keys — each conditional on the palette, not on the profile, so
+"   any theme can opt in without declaring itself a code theme.  Omitted, each
+"   falls back to the role that carried the group before the key existed:
+"
+"   oper     operators; falls back to ink_soft.  A .tex file has almost no
+"            operators in it; a code theme has them on every line.
+"   struct   Structure/Typedef — class, struct, template, namespace, typedef;
+"            falls back to quote.  Splits the shape-declaring keywords from
+"            the types they declare (the jellybeans split).
+"   storage  StorageClass — static, const, extern, register; falls back to
+"            quote.  Qualifiers read as constant-machinery, not as types.
+"   except   Exception — try, catch, throw, raise; falls back to cmd, so the
+"            danger keywords can wear the alarm colour.
+"
 "   marker  marker_hot  on_hot      search marks; on_hot is the foreground laid
 "                                   over marker_hot, and flips per edition so
 "                                   the live match stays the brightest mark
@@ -35,16 +51,21 @@
 
 let s:none = ['NONE', 'NONE']
 let s:p = {}
+let s:bold = 1
 
 function! s:c(name) abort
   return empty(a:name) ? s:none : get(s:p, a:name, s:none)
 endfunction
 
-" Strip `bold` from an attribute list when g:broadsheet_bold is off, leaving any
-" other attributes intact ('bold,italic' -> 'italic', 'bold' -> 'NONE').
-" Applied in one place so every group honours the option automatically.
+" Strip `bold` from an attribute list when weight is off, leaving any other
+" attributes intact ('bold,italic' -> 'italic', 'bold' -> 'NONE').  Applied in
+" one place so every group honours it automatically.
+"
+" Two things can turn it off, and either is enough: g:broadsheet_bold, which is
+" the reader's, and the theme's own 'bold' option, which is the designer's.
+" Neither can force weight back on — the switch only ever removes.
 function! s:attr(attr) abort
-  if get(g:, 'broadsheet_bold', 1) || a:attr ==# 'NONE'
+  if s:bold || a:attr ==# 'NONE'
     return a:attr
   endif
   let l:a = substitute(a:attr, '\C\<bold\>', '', 'g')
@@ -70,7 +91,20 @@ function! s:hi(group, fg, bg, ...) abort
 endfunction
 
 " Apply a palette.  Called by each colors/*.vim after it picks its edition.
-function! broadsheet#apply(name, palette, ansi) abort
+"
+" {opts} is optional.  Two keys:
+"
+"   'profile'  'prose' (default)  coffee, graphite -- markup around prose
+"              'code'             tokyonight -- a source file, where there is no
+"                                 prose to protect.  Swaps four of the
+"                                 assignments below; the block at the foot of
+"                                 this function is the whole of it.
+"
+"   'bold'     1 (default) or 0.  0 means the theme carries no weight at all,
+"              the same treatment g:broadsheet_bold gives on the reader's side.
+function! broadsheet#apply(name, palette, ansi, ...) abort
+  let l:opts = a:0 > 0 ? a:1 : {}
+  let s:bold = get(l:opts, 'bold', 1) && get(g:, 'broadsheet_bold', 1)
   hi clear
   if exists('syntax_on')
     syntax reset
@@ -202,18 +236,20 @@ function! broadsheet#apply(name, palette, ansi) abort
   call s:hi('Conditional',    'cmd',   '')
   call s:hi('Repeat',         'cmd',   '')
   call s:hi('Label',          'cmd',   '')
-  call s:hi('Operator',       'ink_soft',  '')
+  " `oper` is the optional palette key; without it, the secondary ink.
+  call s:hi('Operator', has_key(a:palette, 'oper') ? 'oper' : 'ink_soft', '')
   call s:hi('Keyword',        'cmd',   '', 'bold')
-  call s:hi('Exception',      'cmd',   '', 'bold')
+  call s:hi('Exception', has_key(a:palette, 'except') ? 'except' : 'cmd', '', 'bold')
   call s:hi('PreProc',        'env', '')
   call s:hi('Include',        'env', '')
   call s:hi('Define',         'env', '')
   call s:hi('Macro',          'env', '')
   call s:hi('PreCondit',      'env', '')
   call s:hi('Type',           'quote',     '')
-  call s:hi('StorageClass',   'quote',     '')
-  call s:hi('Structure',      'quote',     '')
-  call s:hi('Typedef',        'quote',     '')
+  " `struct` and `storage` mirror `oper`: optional keys, quote without them.
+  call s:hi('StorageClass', has_key(a:palette, 'storage') ? 'storage' : 'quote', '')
+  call s:hi('Structure',    has_key(a:palette, 'struct') ? 'struct' : 'quote', '')
+  call s:hi('Typedef',      has_key(a:palette, 'struct') ? 'struct' : 'quote', '')
   call s:hi('Special',        'math',     '')
   call s:hi('SpecialChar',    'math',     '')
   call s:hi('Tag',            'ref',      '')
@@ -224,7 +260,22 @@ function! broadsheet#apply(name, palette, ansi) abort
   call s:hi('Ignore',         'ink_faint', '')
   call s:hi('Error',          'alert',       '', 'bold')
   call s:hi('Todo',           'ink',       'marker', 'bold')
-  call s:hi('Property',       'ref',      '')
+  " Members take the constant hue, not the function one.  `obj.field` and
+  " `obj.method()` sit side by side all day, and on `ref` they were the same
+  " colour — the reading Catppuccin avoids by putting properties on its teal.
+  call s:hi('Property',       'opt',      '')
+
+  " ---------------------------------------------------------------------------
+  " Source filetypes — one upstream link that lands in the wrong place
+  " ---------------------------------------------------------------------------
+  " Vim's r.vim links rAssign to Statement, so `<-`, `->` and every `=` in a
+  " named argument come out in the palette's loudest colour — on the single
+  " most frequent glyph in an R file.  An assignment arrow is an operator.
+  highlight! link rAssign Operator
+  " (r.vim uses a plain `hi def link`, so this one holds.  python.vim's
+  " pythonBoolean/pythonConstant use `hi! def link`, which overrides even a
+  " full definition from here -- that one cannot be fixed from a colorscheme.
+  " See broadsheet-python in the help file.)
 
   " =============================================================================
   " LaTeX — vimtex
@@ -699,8 +750,20 @@ function! broadsheet#apply(name, palette, ansi) abort
   " there.  Stating them here means they are re-established on every load rather
   " than depending on coc re-running.
   "
-  " The real names are CocSemType<Kind> / CocSemMod<Modifier>; a plain
+  " coc builds the names itself (build/index.js, toHighlightPart):
+  "
+  "     "CocSemType"    + <Kind>
+  "     "CocSemTypeMod" + <Kind> + <Modifier>
+  "
+  " with only the first character of each part upper-cased, so `enumMember`
+  " becomes `EnumMember` and `readonly` becomes `Readonly`.  A plain
   " `CocSemFunction` is from an older coc and is never consulted.
+  "
+  " A token with modifiers is emitted TWICE — once as the plain kind, then again
+  " as the kind+modifier — and only for `tokenModifiers[0]`.  So a modifier group
+  " lands only when the server lists that modifier first; clangd puts
+  " `declaration` ahead of `readonly`, which means a const's declaring line keeps
+  " the base colour while every use of it picks up the modifier colour.
   "
   " coc would rather have the treesitter-style names (its map reads
   " ['@function', 'Function']), but Vim -- unlike Neovim -- only allows
@@ -710,7 +773,8 @@ function! broadsheet#apply(name, palette, ansi) abort
   " is the correct path in Vim.
   for [s:k, s:v] in items({
         \ 'TypeNamespace': 'Include',     'TypeType': 'Type',
-        \ 'TypeClass': 'Special',         'TypeEnum': 'Type',
+        \ 'TypeClass': 'Structure',       'TypeEnum': 'Type',
+        \ 'TypeConcept': 'Structure',
         \ 'TypeInterface': 'Type',        'TypeStruct': 'Structure',
         \ 'TypeTypeParameter': 'Identifier', 'TypeParameter': 'Identifier',
         \ 'TypeVariable': 'Identifier',   'TypeProperty': 'Property',
@@ -720,12 +784,61 @@ function! broadsheet#apply(name, palette, ansi) abort
         \ 'TypeModifier': 'StorageClass', 'TypeComment': 'Comment',
         \ 'TypeString': 'String',         'TypeNumber': 'Number',
         \ 'TypeBoolean': 'Boolean',       'TypeRegexp': 'String',
-        \ 'TypeOperator': 'Operator',     'TypeDecorator': 'Identifier',
+        \ 'TypeOperator': 'Operator',     'TypeDecorator': 'PreProc',
         \ 'ModDeprecated': 'CocDeprecatedHighlight',
+        \
+        \ 'TypeModVariableReadonly': 'Number',
+        \ 'TypeModParameterReadonly': 'Number',
+        \ 'TypeModPropertyReadonly': 'Number',
+        \ 'TypeModEnumMemberReadonly': 'Number',
         \ })
     execute 'highlight! link CocSem' . s:k . ' ' . s:v
   endfor
   unlet! s:k s:v
+
+  " A namespace is one of the things the optional `struct` key exists for: the
+  " key covers class / template / namespace / typedef, so `namespace demo {`
+  " and every `std::` that follows should read alike.  Without the key a
+  " namespace stays on Include, which is what every theme did before it
+  " existed -- conditional on the palette, not on the profile, same shape as
+  " `oper`.
+  "
+  " `Namespace` is not a Vim group, but resolvers that walk a candidate chain
+  " (coc's own, and the one in this user's vimrc) probe it before falling back
+  " to Include, so it is defined here to land on the same colour rather than
+  " on the preprocessor's.
+  if has_key(a:palette, 'struct')
+    highlight! link CocSemTypeNamespace Structure
+    highlight! link Namespace           Structure
+  else
+    highlight! link Namespace           Include
+  endif
+
+  " ---------------------------------------------------------------------------
+  " Code profile — opt-in, via broadsheet#apply(..., {'profile': 'code'})
+  " ---------------------------------------------------------------------------
+  " Four of the assignments above are decisions about a page of prose, and they
+  " do not survive contact with a source file.  A theme built for code asks for
+  " these instead; nothing else in this file is conditional.
+  if get(l:opts, 'profile', 'prose') ==# 'code'
+    " In a .tex file the braces are noise wrapped around the prose and belong
+    " at the hairline.  In R, `,` and `;` ARE the argument list; in shell, `()`
+    " is the function.  Punctuation is structure here, so it reads at operator
+    " weight — quiet, but never something you have to hunt for.
+    call s:hi('Delimiter', 'ink_soft', '')
+    highlight! link CocSemTypeBracket Delimiter
+
+    " Delimiters recede, content advances — and in a source file the content is
+    " the identifiers.  They take full ink rather than the secondary weight.
+    call s:hi('Identifier', 'ink', '')
+
+    " Function names are open-ended and on every other line, so weighting them
+    " is noise rather than hierarchy — the hue alone carries them.  (Keywords
+    " are a closed vocabulary and could carry weight; tokyonight declines it
+    " everywhere via 'bold', which makes this line a no-op there but keeps the
+    " profile honest for a code theme that wants weight.)
+    call s:hi('Function', 'ref', '')
+  endif
 
   " ---------------------------------------------------------------------------
   " :terminal / floaterm ANSI palette
