@@ -4,7 +4,7 @@
 " it is how the rAssign bug was found.
 "
 " Usage:
-"   THEME=vga WALK_FILE=scripts/samples/sample.cpp WALK_OUT=/tmp/walk.tsv \
+"   THEME=swan-vga WALK_FILE=scripts/samples/sample.cpp WALK_OUT=/tmp/walk.tsv \
 "     vim -N -X -u NONE --cmd 'set rtp^=~/code/vim-broadsheet' \
 "         -S scripts/synwalk.vim </dev/null 2>/dev/null
 "

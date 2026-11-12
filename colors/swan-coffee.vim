@@ -1,5 +1,5 @@
 " =============================================================================
-" coffee.vim — the warm edition of the Broadsheet newspaper family
+" swan-coffee.vim — the warm edition of the Broadsheet newspaper family
 " =============================================================================
 "
 " Brown-based: warm newsprint stock and warm accents, with pure black body text
@@ -11,7 +11,7 @@
 "
 " All group assignments live in autoload/broadsheet.vim — this file is only a
 " palette.  See that file for the role each key plays.  Its cool-grey sibling
-" is colors/graphite.vim.
+" is colors/swan-graphite.vim.
 "
 " Every text-bearing pair here is >= 4.5:1 WCAG contrast.  ink_faint is the one
 " deliberate exception: it is for brace glyphs and hairline rules, never text.
@@ -22,7 +22,7 @@
 " would silently turn this colorscheme into a no-op.
 if empty(globpath(&runtimepath, 'autoload/broadsheet.vim'))
   echohl ErrorMsg
-  echomsg 'coffee: autoload/broadsheet.vim not found on runtimepath'
+  echomsg 'swan-coffee: autoload/broadsheet.vim not found on runtimepath'
   echohl NONE
   finish
 endif
@@ -96,7 +96,7 @@ else
         \ ]
 endif
 
-call broadsheet#apply('coffee', s:palette, s:ansi)
+call broadsheet#apply('swan-coffee', s:palette, s:ansi)
 unlet s:palette s:ansi
 
 " vim: set ft=vim ts=2 sw=2 et:

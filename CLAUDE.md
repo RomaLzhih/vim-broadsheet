@@ -24,8 +24,10 @@ If any reappear they shadow the plugin and edits here stop taking effect.
 `autoload/broadsheet.vim` holds every highlight-group assignment. A theme file
 is *only* a palette that calls `broadsheet#apply(name, palette, ansi [, opts])`.
 
-Five themes: `coffee` and `graphite` (prose); `tokyonight`, `vga` and
-`phosphor` (code). Both retro themes are dark-only — each colors file sets
+Six themes: `swan-coffee` and `swan-graphite` (prose); `swan-tokyonight`,
+`swan-budapest`, `swan-vga` and `swan-phosphor` (code). All six carry the
+`swan-` prefix (renamed 2026-11-11). **These notes use the short names** —
+`vga` means `swan-vga` — except in paths and commands, which are exact. Both retro themes are dark-only — each colors file sets
 `background=dark` itself behind an `if &background !=# 'dark'` guard, which is
 what keeps the colorscheme re-source Vim triggers on a 'background' change
 from looping (verified: a light start and a mid-session `:set
@@ -78,7 +80,7 @@ This matters more than it sounds. Several real bugs shipped past casual checks.
 verification passes. The load test must surface messages:
 
 ```vim
-redir => msg | execute 'colorscheme graphite' | redir END
+redir => msg | execute 'colorscheme swan-graphite' | redir END
 ```
 
 **Dump every group and audit contrast.** The method: walk highlight groups by id
@@ -418,9 +420,61 @@ candidate comparison lives in the "The Fourth Broadsheet" artifact.
   reassignment on vga and not one value was invented to fill a gap. Try moving a measured value to a rarer role
   before deriving a new one — it keeps the palette's provenance intact.
 
+### budapest (2026-11-11)
+
+- **One idea: the page is cut from the lobby boy's uniform, and everything
+  printed on it is published.** The eight hexes are `GrandBudapest1` and
+  `GrandBudapest2` from the wesanderson R package (`R/colors.R`, checked
+  against the source). On the late edition all eight are verbatim: seven
+  carry text, the oxblood is the Search fill. Exactly one accent is invented,
+  the pastry green on `ref` (`#97dab8`, L 82 / C 30 / h 160).
+- **The assignment was chosen on adjacency.** The published colours are two
+  harmonies, so several pairs sit at ΔE 25-30 (pink/rose 25.2, lavender/blue
+  26.6, apricot/rose 28.2) — the range this file already records as "two
+  shades of one colour". Each close pair is split across roles that rarely
+  touch: keywords pink / functions green (ΔE 62.7); fields lavender /
+  functions green (the Property-on-`opt` rule, 46.6); types apricot / preproc
+  blue (the tokyonight fix, 78.6); lavender and blue are fields and macros;
+  rose, which sits between pink and apricot, is strings. An earlier cut had
+  functions on the lavender and fields on the rose, which put the closest
+  pair on keyword-next-to-field; it was dropped before anything was shown.
+- **Law 2 holds with no exception on the late edition.** env is the lowest
+  frequent role at L 61.2; the orange (L 58.6) sits on `math`/`storage`, the
+  sanctioned place. `oper` is the body ink, vga's reasoning. No `struct` key.
+- **Accepted with the palette, shown to the user before it was built:** env
+  on bg_deep is the tightest emitted pair (4.51); the Search fill is 1.39:1
+  against the page, the softest in the family, because it is the published
+  oxblood; strings/comments is the closest pair (ΔE 24.5).
+- **The stock ladder was respaced after approval — the only change from the
+  approved pick.** The first ladder gave CursorLine 1.06:1 and Visual 1.16:1
+  against the page, where every other edition is 1.09-1.12 and 1.21-1.29. The
+  page went from `#1d1624` to `#1a131f` to make room under bg_deep, which
+  env's AA pair caps at L 18.6. Diff washes were lifted into the family's
+  range in the same pass.
+- **The day edition is derived.** Every accent is pressed down its own hue
+  line; four published hexes survive verbatim (oxblood on `storage`, apricot
+  and salmon as Search/IncSearch, lavender as DiffText). `opt` is held greyer
+  and lighter than `env` because lavender and cornflower share a hue family
+  (ΔE 18.5 as built, the closest pair on that page), and the comment ink runs
+  warmer than the body ink because on one hue line it was ΔE 15.5 from fields.
+- **`colorlib.py audit` passes both editions**, the day one with every
+  frequent role declared in `law_exceptions`: law 2 describes a dark page,
+  and on paper AA forces every ink dark. A declared exception, not a change
+  to the law or the tool.
+- Dump audit, clean harness: 518 groups, 38 (late) / 39 (day) distinct pairs,
+  0 below AA; 0 bold / 46 italic / 23 underline / 12 undercurl.
+- **`gen_airline.py` now handles a two-edition colors file**: both palettes
+  go inside `airline#themes#<name>#refresh()`, which airline calls on every
+  theme load, so the bar turns with `'background'`. Output for the
+  single-palette themes was compared old generator against new and is
+  byte-identical. Noticed while checking: the committed `vga` airline theme
+  predates vga's last reassignment (its insert block still wears the green
+  that is now `struct`), so regenerating it would change it. Left alone.
+
 ## Airline
 
-`autoload/airline/themes/vga.vim` and `phosphor.vim` ship with the themes,
+`autoload/airline/themes/swan_vga.vim`, `swan_phosphor.vim` and
+`swan_budapest.vim` ship with the themes,
 generated by `scripts/gen_airline.py` from the palette (which refuses to write
 a file if any pair is under AA).  They exist because without one airline
 derives its own colours: under vga it put `bg_deep` text on `bg_alt`, ~1.1:1,
@@ -428,17 +482,21 @@ which made every middle statusline section and every tab label invisible —
 that is what the user reported as "hard to read", and it was not the core's
 TabLine groups, which measured fine.
 
-`airline#switch_matching_theme()` resolves a theme by `tolower(g:colors_name)`,
-so these are picked up on any interactive `:colorscheme`.  Caveat worth
+`airline#switch_matching_theme()` resolves a theme by
+`tr(tolower(g:colors_name), '-', '_')`, so these are picked up on any
+interactive `:colorscheme` — and that `tr()` is why the files are
+`swan_<name>.vim` with an underscore while the colorschemes are
+`swan-<name>`: an autoload name cannot hold a hyphen. `gen_airline.py` makes
+the same substitution.  Caveat worth
 knowing: `~/.vimrc.d/40-colorscheme.vim:72` guards that call with
 `v:vim_did_enter`, so a theme set at *startup* keeps the pinned
 `g:airline_theme` instead.  Making vga the startup theme means setting
-`g:airline_theme = 'vga'` too.
+`g:airline_theme = 'swan_vga'` too.
 
 Regenerate after any palette edit:
 
 ```
-command python3 scripts/gen_airline.py colors/vga.vim colors/phosphor.vim
+command python3 scripts/gen_airline.py colors/swan-vga.vim colors/swan-phosphor.vim colors/swan-budapest.vim
 ```
 
 ## Open items
@@ -446,8 +504,8 @@ command python3 scripts/gen_airline.py colors/vga.vim colors/phosphor.vim
 - **vim-signify clash.** `~/.vimrc:702` `s:SignifyGitSignStyle()` hardcodes
   gruvbox lime/red on `#282828` and re-fires on `ColorScheme *`, overriding the
   theme's sign colours on cream/grey stock. One-line fix, not yet applied
-  (regex needs all five names):
-  `if get(g:, 'colors_name', '') =~# 'coffee\|graphite\|tokyonight\|vga\|phosphor' | return | endif`
+  (the prefix covers all six):
+  `if get(g:, 'colors_name', '') =~# '^swan-' | return | endif`
 - **graphite has one real 256-colour bug**, found when `check_cterm()` was
   added and not yet fixed because graphite is settled and the user has not
   asked: `ink_soft #a8aeb3` and `quote #9fb0bd` both quantise to xterm 145

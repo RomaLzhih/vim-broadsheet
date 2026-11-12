@@ -1,7 +1,7 @@
 " dump.vim — emit every highlight group for one theme/edition, resolved.
 "
 " Usage (see CLAUDE.md "How to verify a change"):
-"   THEME=vga BGSET=dark DUMP_OUT=/tmp/vga_dark.tsv \
+"   THEME=swan-vga BGSET=dark DUMP_OUT=/tmp/swan-vga_dark.tsv \
 "     vim -N -X -u NONE --cmd 'set rtp^=~/code/vim-broadsheet' \
 "         -S scripts/dump.vim </dev/null 2>/dev/null
 "

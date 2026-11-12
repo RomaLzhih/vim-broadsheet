@@ -3,9 +3,9 @@
 " =============================================================================
 "
 " Every highlight-group assignment for the family lives here.  A theme is just a
-" palette: colors/coffee.vim, colors/graphite.vim and colors/tokyonight.vim each
-" define one and hand it to broadsheet#apply().  Fix a group here and every
-" theme inherits the fix.
+" palette: colors/swan-coffee.vim, colors/swan-graphite.vim and
+" colors/swan-tokyonight.vim each define one and hand it to
+" broadsheet#apply().  Fix a group here and every theme inherits the fix.
 "
 " Design — "Broadsheet":  markup recedes, prose advances.
 "

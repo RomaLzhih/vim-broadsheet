@@ -1,5 +1,5 @@
 " =============================================================================
-" phosphor.vim — the CRT edition of the Broadsheet family
+" swan-phosphor.vim — the CRT edition of the Broadsheet family
 " =============================================================================
 "
 " A colour terminal remembered as a monochrome one.  The tube is a green-cast
@@ -88,7 +88,7 @@
 " would silently turn this colorscheme into a no-op.
 if empty(globpath(&runtimepath, 'autoload/broadsheet.vim'))
   echohl ErrorMsg
-  echomsg 'phosphor: autoload/broadsheet.vim not found on runtimepath'
+  echomsg 'swan-phosphor: autoload/broadsheet.vim not found on runtimepath'
   echohl NONE
   finish
 endif
@@ -141,7 +141,7 @@ let s:ansi = [
       \ '#87afff', '#e29fd8', '#5ce6e6', '#d6ecd0',
       \ ]
 
-call broadsheet#apply('phosphor', s:palette, s:ansi,
+call broadsheet#apply('swan-phosphor', s:palette, s:ansi,
       \ {'profile': 'code', 'bold': 0})
 unlet s:palette s:ansi
 

@@ -1,5 +1,5 @@
 " =============================================================================
-" tokyonight.vim — the code edition of the Broadsheet family
+" swan-tokyonight.vim — the code edition of the Broadsheet family
 " =============================================================================
 "
 " Coffee and graphite are typesetting themes: they are pitched for a .tex file,
@@ -87,7 +87,7 @@
 " would silently turn this colorscheme into a no-op.
 if empty(globpath(&runtimepath, 'autoload/broadsheet.vim'))
   echohl ErrorMsg
-  echomsg 'tokyonight: autoload/broadsheet.vim not found on runtimepath'
+  echomsg 'swan-tokyonight: autoload/broadsheet.vim not found on runtimepath'
   echohl NONE
   finish
 endif
@@ -165,7 +165,7 @@ else
         \ ]
 endif
 
-call broadsheet#apply('tokyonight', s:palette, s:ansi,
+call broadsheet#apply('swan-tokyonight', s:palette, s:ansi,
       \ {'profile': 'code', 'bold': 0})
 unlet s:palette s:ansi
 

@@ -1,5 +1,5 @@
 " =============================================================================
-" vga.vim — the DOS edition of the Broadsheet family
+" swan-vga.vim — the DOS edition of the Broadsheet family
 " =============================================================================
 "
 " IBM PC text mode on true black.  The hexes are IBM's DAC; the intensity bit
@@ -158,7 +158,7 @@
 " would silently turn this colorscheme into a no-op.
 if empty(globpath(&runtimepath, 'autoload/broadsheet.vim'))
   echohl ErrorMsg
-  echomsg 'vga: autoload/broadsheet.vim not found on runtimepath'
+  echomsg 'swan-vga: autoload/broadsheet.vim not found on runtimepath'
   echohl NONE
   finish
 endif
@@ -207,7 +207,7 @@ let s:ansi = [
       \ '#6666ff', '#ff55ff', '#55ffff', '#ffffff',
       \ ]
 
-call broadsheet#apply('vga', s:palette, s:ansi,
+call broadsheet#apply('swan-vga', s:palette, s:ansi,
       \ {'profile': 'code', 'bold': 0})
 unlet s:palette s:ansi
 

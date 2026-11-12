@@ -1,5 +1,5 @@
 " =============================================================================
-" graphite.vim — the cool edition of the Broadsheet newspaper family
+" swan-graphite.vim — the cool edition of the Broadsheet newspaper family
 " =============================================================================
 "
 " Grey-based, and designed from the drafting table rather than from newsprint.
@@ -53,7 +53,7 @@
 "
 " All group assignments live in autoload/broadsheet.vim — this file is only a
 " palette.  See that file for the role each key plays.  Its warm sibling is
-" colors/coffee.vim.
+" colors/swan-coffee.vim.
 "
 " Every text-bearing pair here is >= 4.5:1 WCAG contrast.  ink_faint is the one
 " deliberate exception: it is for brace glyphs and hairline rules, never text.
@@ -64,7 +64,7 @@
 " would silently turn this colorscheme into a no-op.
 if empty(globpath(&runtimepath, 'autoload/broadsheet.vim'))
   echohl ErrorMsg
-  echomsg 'graphite: autoload/broadsheet.vim not found on runtimepath'
+  echomsg 'swan-graphite: autoload/broadsheet.vim not found on runtimepath'
   echohl NONE
   finish
 endif
@@ -138,7 +138,7 @@ else
         \ ]
 endif
 
-call broadsheet#apply('graphite', s:palette, s:ansi)
+call broadsheet#apply('swan-graphite', s:palette, s:ansi)
 unlet s:palette s:ansi
 
 " vim: set ft=vim ts=2 sw=2 et:

@@ -3,26 +3,31 @@
 Newspaper colorschemes for Vim, built for writing **LaTeX and Markdown** rather
 than for reading code — plus a code side built for the opposite.
 
-Five themes share one core:
+Six themes share one core:
 
 | | | |
 |---|---|---|
-| **coffee** | warm — press-red, ochre, sepia on newsprint cream | light + dark |
-| **graphite** | cool — burgundy, blueprint blue, cyan, slate on grey stock | light + dark |
-| **tokyonight** | the Tokyo Night palette, pitched at source code | dark + light |
-| **vga** | the IBM PC's sixteen on true black — white prose, magenta keywords | dark only |
-| **phosphor** | CRT terminal — P3 amber and P39 green glow on a green-black tube | dark only |
+| **swan-coffee** | warm — press-red, ochre, sepia on newsprint cream | light + dark |
+| **swan-graphite** | cool — burgundy, blueprint blue, cyan, slate on grey stock | light + dark |
+| **swan-tokyonight** | the Tokyo Night palette, pitched at source code | dark + light |
+| **swan-budapest** | The Grand Budapest Hotel — the film's two published palettes on a stock cut from the lobby boy's uniform | dark + light |
+| **swan-vga** | the IBM PC's sixteen on true black — white prose, magenta keywords | dark only |
+| **swan-phosphor** | CRT terminal — P3 amber and P39 green glow on a green-black tube | dark only |
 
 ```vim
-:colorscheme coffee
-:colorscheme graphite
-:colorscheme tokyonight
+:colorscheme swan-coffee
+:colorscheme swan-graphite
+:colorscheme swan-tokyonight
+:colorscheme swan-budapest
 :set background=light   " day edition
 :set background=dark    " late edition
 
-:colorscheme vga        " both retro themes are dark-only — a CRT
-:colorscheme phosphor   " has no day edition; each sets it itself
+:colorscheme swan-vga        " both retro themes are dark-only — a CRT
+:colorscheme swan-phosphor   " has no day edition; each sets it itself
 ```
+
+Every theme in this pack is named with a `swan-` prefix. Below they go by
+their short names.
 
 ## The idea
 
@@ -54,11 +59,12 @@ prose.
 
 ## The code editions
 
-**tokyonight**, **vga** and **phosphor** invert the premise.
+**swan-tokyonight**, **swan-budapest**, **swan-vga** and **swan-phosphor**
+invert the premise.
 There is no prose in a source file to protect, and every token on the line is
 content, so four of the assignments above are swapped:
 
-| | prose (coffee, graphite) | code (the other three) |
+| | prose (swan-coffee, swan-graphite) | code (the other four) |
 |---|---|---|
 | `Delimiter` | hairline — braces are noise around the text | operator weight — in R `,` *is* the argument list |
 | `Identifier` | secondary ink | full ink — the identifiers are the content |
@@ -129,7 +135,7 @@ Then pick an edition and a theme:
 ```vim
 set termguicolors
 set background=light
-colorscheme coffee
+colorscheme swan-coffee
 ```
 
 Requires a truecolor terminal (`set termguicolors`). 256-color fallbacks are
@@ -161,7 +167,7 @@ in LaTeX `\times` stops standing out from the math around it.
 The switch only ever removes weight, never adds it, so it does nothing to
 tokyonight — that theme declares `'bold': 0` for itself and already carries
 none. To put weight back into it, edit the `broadsheet#apply()` call at the foot
-of `colors/tokyonight.vim`.
+of `colors/swan-tokyonight.vim`.
 
 ## What it covers
 
@@ -177,10 +183,12 @@ of `colors/tokyonight.vim`.
 - **Plugins** — coc.nvim (including the `CocSemType*` semantic tokens), fzf,
   startify, easymotion, signify, floaterm, which-key, visual-multi, signature,
   bookmarks.
-- **vim-airline** — `vga` and `phosphor` ship matching airline themes, so the
-  statusline and tab strip follow the colorscheme instead of being derived.
-  airline resolves them by name when you switch interactively; if you make one
-  of them your startup colorscheme, set `let g:airline_theme = 'vga'` to match.
+- **vim-airline** — `swan-budapest`, `swan-vga` and `swan-phosphor` ship
+  matching airline themes, so the statusline and tab strip follow the
+  colorscheme instead of being derived. swan-budapest's carries both editions
+  and turns with `'background'`. airline resolves them by name when you switch
+  interactively, spelling the hyphen as an underscore; if you make one of them
+  your startup colorscheme, set `let g:airline_theme = 'swan_vga'` to match.
 - **Terminal** — a matching 16-color ANSI palette for `:terminal` and floaterm.
 
 ## Palettes
@@ -281,7 +289,7 @@ The two retro themes are era palettes on black, each with one describable idea:
 | `env` preproc, `$VAR` | `#fe716b` lifted DAC red | `#ff8778` lifted 3279 red |
 | `alert` errors | `#ff5555` bright red | `#ff6b5e` red |
 
-**vga** — the hexes are IBM's DAC and the intensity bit does the work bold
+**swan-vga** — the hexes are IBM's DAC and the intensity bit does the work bold
 used to do: white prose over the DAC's own grays, and the assignment of Vim's
 own **koehler**, which turns out to be the same palette — koehler's keyword
 yellow is ΔE 4.1 from the DAC's bright yellow, its type green ΔE 5.0, its
@@ -307,12 +315,47 @@ founding rule, delimiters recede and content advances, applied inside the
 expression. One deliberately darker accent
 remains, the lifted amber on numbers and `static`/`const`. Blue at DAC value
 never carries text: it is the Norton-panel wash behind search and diffs.
-**phosphor** — a colour terminal remembered as a monochrome one: a
+**swan-phosphor** — a colour terminal remembered as a monochrome one: a
 phosphor-tinted ink ladder over the IBM 3279's red, green, turquoise and pink,
 with the VT220's P3 amber on the preprocessor and the search flash; the only
 theme in the family whose audit carries zero advisories. Each file's header
 documents every measured deviation from the authentic bytes — the originals it
 replaces are unreadable on black (DOS blue `#0000aa` is 1.58:1).
+
+**swan-budapest** is the film's two published palettes — `GrandBudapest1` and
+`GrandBudapest2` from the [wesanderson](https://github.com/karthik/wesanderson)
+R package — on a stock cut from the lobby boy's uniform. On the late edition
+all eight hexes are used exactly as published, and one colour is added for the
+role they leave empty:
+
+| role | late edition | from |
+|---|---|---|
+| `ink` variables, body, operators | `#f6eae9` cream | picked |
+| `cmd` keywords | `#e6a0c4` hotel pink | GrandBudapest2 |
+| `ref` functions | `#97dab8` pastry green | added |
+| `opt` fields, constants | `#c6cdf7` lavender | GrandBudapest2 |
+| `quote` types | `#f1bb7b` apricot | GrandBudapest1 |
+| `env` preproc, macros | `#7294d4` ribbon blue | GrandBudapest2 |
+| `verb` strings | `#d8a499` dusty rose | GrandBudapest2 |
+| `math` numbers, and `storage` | `#d67236` burnt orange | GrandBudapest1 |
+| `alert` errors, and `except` | `#fd6467` salmon | GrandBudapest1 |
+| search fill | `#5b1a18` oxblood | GrandBudapest1 |
+
+The three most frequent coloured tokens take the three tiers of Mendl's
+Courtesan au chocolat: keywords the pink, functions the green, fields the
+lavender. The two published palettes are harmonies, so several of their colours
+sit closer together than ones drawn for syntax would, and the assignment is
+built to keep each close pair on tokens that rarely touch. Keywords against
+functions is the widest gap in the palette (ΔE 63) on the most frequent
+adjacency; types sit on the apricot and the preprocessor on the blue, yellow
+against blue; and the two loud published values, salmon and orange, land only
+on rare tokens.
+
+The day edition puts the page on the hotel pink's own hue line. Paper needs
+dark inks, so each accent is pressed down its hue line until it clears AA. Four
+published hexes survive there unchanged: the oxblood on `static`/`const`, the
+apricot and the salmon as the two search fills, and the lavender behind changed
+text in a diff.
 
 Paper and ink are four steps each: `bg` / `bg_alt` / `bg_soft` / `bg_deep` and
 `ink` / `ink_soft` / `ink_mute` / `ink_faint`.
@@ -357,7 +400,7 @@ The full palette contract is documented at the top of `autoload/broadsheet.vim`.
   characters keep the accent instead.
 - **vim-signify** users who hardcode `SignifySign*` colors in their vimrc via a
   `ColorScheme *` autocmd will override the theme's. Guard it with
-  `if get(g:, 'colors_name', '') =~# 'coffee\|graphite\|tokyonight\|vga\|phosphor' | return | endif`.
+  `if get(g:, 'colors_name', '') =~# '^swan-' | return | endif`.
 - **C and C++ function calls need `let c_functions = 1`.** Vim's `c.vim` gates
   `cFunction` behind it, so without it a call is plain text. A colorscheme has
   no business setting a syntax option, so set it yourself — or ignore it if
