@@ -3,14 +3,15 @@
 Newspaper colorschemes for Vim, built for writing **LaTeX and Markdown** rather
 than for reading code — plus a code side built for the opposite.
 
-Six themes share one core:
+Seven themes share one core:
 
 | | | |
 |---|---|---|
 | **swan-coffee** | warm — press-red, ochre, sepia on newsprint cream | light + dark |
 | **swan-graphite** | cool — burgundy, blueprint blue, cyan, slate on grey stock | light + dark |
 | **swan-tokyonight** | the Tokyo Night palette, pitched at source code | dark + light |
-| **swan-budapest** | The Grand Budapest Hotel — the film's two published palettes on a stock cut from the lobby boy's uniform | dark + light |
+| **swan-budapest-summer** | The Grand Budapest Hotel in high season — hotel pink and goose yellow in vivid pastels | dark + light |
+| **swan-budapest-winter** | the same hotel in the snow — the same assignment at lower chroma, lilac paper by day | dark + light |
 | **swan-vga** | the IBM PC's sixteen on true black — white prose, magenta keywords | dark only |
 | **swan-phosphor** | CRT terminal — P3 amber and P39 green glow on a green-black tube | dark only |
 
@@ -18,7 +19,8 @@ Six themes share one core:
 :colorscheme swan-coffee
 :colorscheme swan-graphite
 :colorscheme swan-tokyonight
-:colorscheme swan-budapest
+:colorscheme swan-budapest-summer
+:colorscheme swan-budapest-winter
 :set background=light   " day edition
 :set background=dark    " late edition
 
@@ -59,12 +61,12 @@ prose.
 
 ## The code editions
 
-**swan-tokyonight**, **swan-budapest**, **swan-vga** and **swan-phosphor**
-invert the premise.
+**swan-tokyonight**, **swan-budapest-summer**, **swan-budapest-winter**,
+**swan-vga** and **swan-phosphor** invert the premise.
 There is no prose in a source file to protect, and every token on the line is
 content, so four of the assignments above are swapped:
 
-| | prose (swan-coffee, swan-graphite) | code (the other four) |
+| | prose (swan-coffee, swan-graphite) | code (the other five) |
 |---|---|---|
 | `Delimiter` | hairline — braces are noise around the text | operator weight — in R `,` *is* the argument list |
 | `Identifier` | secondary ink | full ink — the identifiers are the content |
@@ -84,7 +86,11 @@ for `Structure`/`Typedef` (`class`, `template`, `namespace`, `typedef`),
 two retro themes supply all three, so a C++ buffer carries a five-way keyword
 split: control flow, types, shape declarations, qualifiers, and the danger
 keywords in the alarm colour. Python's built-in exception names (`KeyError`)
-ride `struct` too — Vim links them to `Structure`.
+ride `struct` too — Vim links them to `Structure`. A fifth, `ns`, decides
+where namespaces go: without it they follow `struct` when that key exists and
+the preprocessor otherwise. The two budapest themes set it, so `std::` stays
+with the preprocessor while `struct` splits class names off the built-in
+types.
 
 **The code themes then go further: no bold anywhere.** The prose themes hang
 hierarchy on two cues, weight and hue, because a `.tex` file is prose with
@@ -183,10 +189,10 @@ of `colors/swan-tokyonight.vim`.
 - **Plugins** — coc.nvim (including the `CocSemType*` semantic tokens), fzf,
   startify, easymotion, signify, floaterm, which-key, visual-multi, signature,
   bookmarks.
-- **vim-airline** — `swan-budapest`, `swan-vga` and `swan-phosphor` ship
-  matching airline themes, so the statusline and tab strip follow the
-  colorscheme instead of being derived. swan-budapest's carries both editions
-  and turns with `'background'`. airline resolves them by name when you switch
+- **vim-airline** — `swan-budapest-summer`, `swan-budapest-winter`, `swan-vga`
+  and `swan-phosphor` ship matching airline themes, so the statusline and tab
+  strip follow the colorscheme instead of being derived. The two budapest ones
+  carry both editions and turn with `'background'`. airline resolves them by name when you switch
   interactively, spelling the hyphen as an underscore; if you make one of them
   your startup colorscheme, set `let g:airline_theme = 'swan_vga'` to match.
 - **Terminal** — a matching 16-color ANSI palette for `:terminal` and floaterm.
@@ -322,40 +328,31 @@ theme in the family whose audit carries zero advisories. Each file's header
 documents every measured deviation from the authentic bytes — the originals it
 replaces are unreadable on black (DOS blue `#0000aa` is 1.58:1).
 
-**swan-budapest** is the film's two published palettes — `GrandBudapest1` and
-`GrandBudapest2` from the [wesanderson](https://github.com/karthik/wesanderson)
-R package — on a stock cut from the lobby boy's uniform. On the late edition
-all eight hexes are used exactly as published, and one colour is added for the
-role they leave empty:
+**swan-budapest-summer** and **swan-budapest-winter** are the Grand Budapest
+Hotel at its height: hotel pink and goose yellow in front, the pastel tiers of
+Mendl's Courtesan au chocolat around them. Summer is the vivid one, winter the
+same assignment at lower chroma. They replaced swan-budapest, whose late
+edition put brown, dark blue and ochre in front of a C++ file: measured on a
+C++ class as clangd paints it, the hotel pink covered 4.1% of the coloured
+code. Here the pink family covers 21.5% and the goose yellow 18%.
 
-| role | late edition | from |
-|---|---|---|
-| `ink` variables, body, operators | `#f6eae9` cream | picked |
-| `cmd` keywords | `#e6a0c4` hotel pink | GrandBudapest2 |
-| `ref` functions | `#97dab8` pastry green | added |
-| `opt` fields, constants | `#c6cdf7` lavender | GrandBudapest2 |
-| `quote` types | `#f1bb7b` apricot | GrandBudapest1 |
-| `env` preproc, macros | `#7294d4` ribbon blue | GrandBudapest2 |
-| `verb` strings | `#d8a499` dusty rose | GrandBudapest2 |
-| `math` numbers, and `storage` | `#d67236` burnt orange | GrandBudapest1 |
-| `alert` errors, and `except` | `#fd6467` salmon | GrandBudapest1 |
-| search fill | `#5b1a18` oxblood | GrandBudapest1 |
+| role | summer | winter | paints |
+|---|---|---|---|
+| `cmd`, `storage` | `#ff86c0` | `#ffa7ce` | keywords, and `const` / `static` / `constexpr` |
+| `env`, `ns` | `#ffb9c9` | `#fecad1` | `#include`, macros, every `std::` |
+| `struct` | `#fcea72` | `#fae594` | class names; `class` / `struct` / `template` |
+| `quote` | `#ffb878` | `#fac89f` | built-in types: `int`, `double`, `bool` |
+| `verb` | `#65ccfe` | `#90cef7` | strings |
+| `ref` | `#82e5b1` | `#99e1bc` | functions |
+| `opt` | `#becafe` | `#c6cdf7` | fields, constants |
+| `math` | `#ff9c80` | `#fea58e` | numbers |
+| `alert`, `except` | `#fd6467` | `#fd6467` | errors, `try` / `catch` |
 
-The three most frequent coloured tokens take the three tiers of Mendl's
-Courtesan au chocolat: keywords the pink, functions the green, fields the
-lavender. The two published palettes are harmonies, so several of their colours
-sit closer together than ones drawn for syntax would, and the assignment is
-built to keep each close pair on tokens that rarely touch. Keywords against
-functions is the widest gap in the palette (ΔE 63) on the most frequent
-adjacency; types sit on the apricot and the preprocessor on the blue, yellow
-against blue; and the two loud published values, salmon and orange, land only
-on rare tokens.
-
-The day edition puts the page on the hotel pink's own hue line. Paper needs
-dark inks, so each accent is pressed down its hue line until it clears AA. Four
-published hexes survive there unchanged: the oxblood on `static`/`const`, the
-apricot and the salmon as the two search fills, and the lavender behind changed
-text in a diff.
+These are the late editions. The day editions press every accent down its own
+hue line until it clears AA on all four paper steps, so nothing sinks under a
+selection: summer on pink paper, winter on a cooler, paler lilac one. On paper
+every ink has to be dark; the season shows in the paper and in the goose-yellow
+and pink search marks.
 
 Paper and ink are four steps each: `bg` / `bg_alt` / `bg_soft` / `bg_deep` and
 `ink` / `ink_soft` / `ink_mute` / `ink_faint`.

@@ -141,7 +141,7 @@ def walk(h_in, bgs, target=4.5, up=True, max_chroma=None):
 # The optional keys are audited too when a palette supplies them; identical
 # pairs (storage == math, except == alert) come back tagged shared-by-design.
 ACCENTS = ['cmd', 'alert', 'ref', 'env', 'verb', 'math', 'opt', 'quote', 'oper',
-           'struct', 'storage', 'except']
+           'struct', 'storage', 'except', 'ns']
 
 
 def accents(p):

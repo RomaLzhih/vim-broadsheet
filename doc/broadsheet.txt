@@ -21,14 +21,18 @@ CONTENTS                                                  *broadsheet-contents*
 ==============================================================================
 1. INTRODUCTION                                       *broadsheet-introduction*
 
-vim-broadsheet is six colorschemes: two tuned for writing prose -- LaTeX and
-Markdown -- rather than for reading code, and four tuned for the opposite.
+vim-broadsheet is seven colorschemes: two tuned for writing prose -- LaTeX
+and Markdown -- rather than for reading code, and five tuned for the opposite.
 
     swan-coffee      warm: press-red, ochre, sepia on newsprint cream
     swan-graphite    cool: burgundy, blueprint blue, cyan, slate on grey stock
     swan-tokyonight  the Tokyo Night palette, pitched at source code
-    swan-budapest    The Grand Budapest Hotel: the film's two published
-                     palettes on a stock cut from the lobby boy's uniform
+    swan-budapest-summer
+                     The Grand Budapest Hotel in high season: hotel pink and
+                     goose yellow in vivid pastels
+    swan-budapest-winter
+                     the same hotel in the snow: the same assignment at lower
+                     chroma, on lilac paper by day
     swan-vga         the IBM PC's sixteen on true black; the intensity bit
                      does the work bold used to do
     swan-phosphor    CRT terminal: P39 green glow and the IBM 3279's colours,
@@ -36,15 +40,15 @@ Markdown -- rather than for reading code, and four tuned for the opposite.
 
 Every theme carries a swan- prefix.  The text below uses their short names.
 
-The first four each ship a light "day edition" and a dark "late edition",
+The first five each ship a light "day edition" and a dark "late edition",
 selected with 'background'.  Both retro themes are dark-only -- a CRT has no
 day edition -- and each of those files sets 'background' to dark itself.  All
-six are driven by a shared core in autoload/broadsheet.vim, so a theme file
+seven are driven by a shared core in autoload/broadsheet.vim, so a theme file
 contains nothing but a palette.
 
 The prose pair were drawn for paper and lead with their light edition;
-tokyonight and budapest were drawn for a dark screen and lead with their dark
-ones.
+tokyonight and the budapest pair were drawn for a dark screen and lead with
+their dark ones.
 
 Requires a truecolor terminal ('termguicolors').  Every group also carries a
 256-color value, so the schemes degrade rather than break.
@@ -56,7 +60,7 @@ Requires a truecolor terminal ('termguicolors').  Every group also carries a
     set termguicolors
     set background=light
     colorscheme swan-coffee   " or swan-graphite, swan-tokyonight,
-                              " swan-budapest
+                              " swan-budapest-summer, swan-budapest-winter
 <
 Switch editions at any time: >
 
@@ -94,8 +98,8 @@ g:broadsheet_bold                                       (default: 1)
         standing out from the math around it.
 
         The switch only ever removes weight, never adds it, so it does nothing
-        to the code themes -- tokyonight, budapest, vga and phosphor declare
-        'bold': 0 for themselves and carry none to begin with.  See
+        to the code themes -- tokyonight, the budapest pair, vga and phosphor
+        declare 'bold': 0 for themselves and carry none to begin with.  See
         |broadsheet-weight|.
 
 ==============================================================================
@@ -133,7 +137,7 @@ implies do not survive contact with a source file.  A theme declares which set
 it wants by passing a profile to |broadsheet#apply()|:
 
     'prose'   the default.  coffee and graphite.
-    'code'    tokyonight, budapest, vga, phosphor.
+    'code'    tokyonight, budapest-summer, budapest-winter, vga, phosphor.
 
 Only these four groups differ.  Everything else in the core is unconditional.
 >
@@ -191,7 +195,7 @@ Ink, four weights:                      ink  ink_soft  ink_mute  ink_faint
     opt      [options], #params, constants, properties
     quote    blockquotes, types, H4-H6
 
-Four keys are OPTIONAL.  Each is conditional on the palette, not on the
+Five keys are OPTIONAL.  Each is conditional on the palette, not on the
 profile, so any theme can opt in; omitted, each falls back to the role that
 carried the group before the key existed:
 
@@ -206,12 +210,16 @@ carried the group before the key existed:
              Qualifiers read as constant-machinery rather than as types.
     except   Exception -- try, catch, throw, raise; falls back to `cmd`, so
              the danger keywords can wear the alarm colour.
+    ns       namespaces -- Namespace and coc's CocSemTypeNamespace; without
+             it they follow `struct` when that key exists, else the
+             preprocessor.  Lets a palette split class names off its types
+             and keep std:: with the preprocessor.
 
 Both retro themes supply all four, which is what gives a C++ buffer its
 five-way keyword split: control flow on cmd, types on quote, shape
 declarations on struct, qualifiers on storage, and throw/try/catch on the
-alarm colour.  budapest supplies oper, storage and except and leaves struct
-to quote, as tokyonight does.
+alarm colour.  The budapest pair supply all five: struct takes the class
+names off the built-in types, and ns keeps std:: with the preprocessor.
 
     marker      search fill
     marker_hot  incremental-search fill

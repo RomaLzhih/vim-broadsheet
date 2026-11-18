@@ -24,9 +24,11 @@ If any reappear they shadow the plugin and edits here stop taking effect.
 `autoload/broadsheet.vim` holds every highlight-group assignment. A theme file
 is *only* a palette that calls `broadsheet#apply(name, palette, ansi [, opts])`.
 
-Six themes: `swan-coffee` and `swan-graphite` (prose); `swan-tokyonight`,
-`swan-budapest`, `swan-vga` and `swan-phosphor` (code). All six carry the
-`swan-` prefix (renamed 2026-11-11). **These notes use the short names** —
+Seven themes: `swan-coffee` and `swan-graphite` (prose); `swan-tokyonight`,
+`swan-budapest-summer`, `swan-budapest-winter`, `swan-vga` and
+`swan-phosphor` (code). All seven carry the `swan-` prefix (renamed
+2026-11-11; the budapest pair replaced `swan-budapest` on 2026-11-18).
+**These notes use the short names** —
 `vga` means `swan-vga` — except in paths and commands, which are exact. Both retro themes are dark-only — each colors file sets
 `background=dark` itself behind an `if &background !=# 'dark'` guard, which is
 what keeps the colorscheme re-source Vim triggers on a 'background' change
@@ -66,6 +68,13 @@ back `cmd`. Facts worth keeping: newer c.vim routes `const` through
 built-in exception *names* (`KeyError`) to `Structure`, so they ride `struct`;
 `cppModifier` (`inline`/`virtual`/`explicit`) stays on `Type`/`quote`,
 matching jellybeans.
+
+`ns` (2026-11-18) is a fifth. When present, `Namespace` is a real group in
+that colour and `CocSemTypeNamespace` links to it; without it, namespaces
+follow `struct` when that key exists, else `Include`. It exists because the
+budapest pair needed `struct` (class names off the built-in types) without
+dragging every `std::` along. A byte-identical no-op for the five themes
+that do not set it, proven by dump-diff.
 
 `g:broadsheet_bold` (default 1) is handled in one place, `s:attr()`, which
 strips `bold` from every attribute string. Don't add literal `gui=bold` anywhere
@@ -420,61 +429,79 @@ candidate comparison lives in the "The Fourth Broadsheet" artifact.
   reassignment on vga and not one value was invented to fill a gap. Try moving a measured value to a rarer role
   before deriving a new one — it keeps the palette's provenance intact.
 
-### budapest (2026-11-11)
+### budapest-summer / budapest-winter (2026-11-18)
 
-- **One idea: the page is cut from the lobby boy's uniform, and everything
-  printed on it is published.** The eight hexes are `GrandBudapest1` and
-  `GrandBudapest2` from the wesanderson R package (`R/colors.R`, checked
-  against the source). On the late edition all eight are verbatim: seven
-  carry text, the oxblood is the Search fill. Exactly one accent is invented,
-  the pastry green on `ref` (`#97dab8`, L 82 / C 30 / h 160).
-- **The assignment was chosen on adjacency.** The published colours are two
-  harmonies, so several pairs sit at ΔE 25-30 (pink/rose 25.2, lavender/blue
-  26.6, apricot/rose 28.2) — the range this file already records as "two
-  shades of one colour". Each close pair is split across roles that rarely
-  touch: keywords pink / functions green (ΔE 62.7); fields lavender /
-  functions green (the Property-on-`opt` rule, 46.6); types apricot / preproc
-  blue (the tokyonight fix, 78.6); lavender and blue are fields and macros;
-  rose, which sits between pink and apricot, is strings. An earlier cut had
-  functions on the lavender and fields on the rose, which put the closest
-  pair on keyword-next-to-field; it was dropped before anything was shown.
-- **Law 2 holds with no exception on the late edition.** env is the lowest
-  frequent role at L 61.2; the orange (L 58.6) sits on `math`/`storage`, the
-  sanctioned place. `oper` is the body ink, vga's reasoning. No `struct` key.
-- **Accepted with the palette, shown to the user before it was built:** env
-  on bg_deep is the tightest emitted pair (4.51); the Search fill is 1.39:1
-  against the page, the softest in the family, because it is the published
-  oxblood; strings/comments is the closest pair (ΔE 24.5).
-- **The stock ladder was respaced after approval — the only change from the
-  approved pick.** The first ladder gave CursorLine 1.06:1 and Visual 1.16:1
-  against the page, where every other edition is 1.09-1.12 and 1.21-1.29. The
-  page went from `#1d1624` to `#1a131f` to make room under bg_deep, which
-  env's AA pair caps at L 18.6. Diff washes were lifted into the family's
-  range in the same pass.
-- **The day edition is derived.** Every accent is pressed down its own hue
-  line; four published hexes survive verbatim (oxblood on `storage`, apricot
-  and salmon as Search/IncSearch, lavender as DiffText). `opt` is held greyer
-  and lighter than `env` because lavender and cornflower share a hue family
-  (ΔE 18.5 as built, the closest pair on that page), and the comment ink runs
-  warmer than the body ink because on one hue line it was ΔE 15.5 from fields.
-- **`colorlib.py audit` passes both editions**, the day one with every
-  frequent role declared in `law_exceptions`: law 2 describes a dark page,
-  and on paper AA forces every ink dark. A declared exception, not a change
-  to the law or the tool.
-- Dump audit, clean harness: 518 groups, 38 (late) / 39 (day) distinct pairs,
-  0 below AA; 0 bold / 46 italic / 23 underline / 12 undercurl.
-- **`gen_airline.py` now handles a two-edition colors file**: both palettes
-  go inside `airline#themes#<name>#refresh()`, which airline calls on every
-  theme load, so the bar turns with `'background'`. Output for the
-  single-palette themes was compared old generator against new and is
-  byte-identical. Noticed while checking: the committed `vga` airline theme
-  predates vga's last reassignment (its insert block still wears the green
-  that is now `struct`), so regenerating it would change it. Left alone.
+They replaced `swan-budapest` (2026-11-11), the published-palette version,
+which is deleted; its notes and files are in git at `73f42f4`.
+
+- **Why.** The user found swan-budapest's late edition gloomy in C++: brown,
+  dark blue and dark yellow in front. Measured on a 50-line C++ class exactly
+  as their Vim paints it (clangd's semantic tokens resolved through
+  `~/.vim/vimrc.d/60-coc-semantic.vim`'s chains, Vim syntax for the rest), the
+  hotel pink covered 4.1% of the coloured code; apricot types 24.8%, lavender
+  19.8%, the dark blue (`#include`, macros, every `std::`) 12.5%, dusty-rose
+  strings plus the burnt orange 14%. Most C++ keywords never reached pink:
+  `class`/`struct`/`template`/`namespace` ride `Structure` -> `quote`, and
+  `const`/`static`/`constexpr` ride `StorageClass` -> `storage`.
+- **The ask: pink and goose yellow (鹅黄) in front; lively, fresh, bright.**
+  Recolouring alone left pink under 10%, so pink takes more jobs: `storage` =
+  `cmd` (qualifiers), and `env` = `ns` = a lighter blossom pink (preprocessor,
+  macros, namespaces). Strings take the light blue the dark blue gave up;
+  numbers go coral.
+- **The yellow was split at the user's request** ("鹅黄多了一点"): `struct`
+  keeps class names and the shape keywords in goose yellow, `quote` takes the
+  built-in types (`int`, `double`, `bool`, `void`, `size_t`, and `explicit`
+  via `cppModifier`). The built-in-type colour went: the film's burnt orange
+  lifted to L 60 (too dark) -> a tangerine at chroma 67 (jumped out of the
+  pastels) -> peach. Rejected on the way: lilac (dE 20 from both fields and
+  keywords, the two things a built-in type touches most), aqua (dE 17 from
+  functions), coral (would merge with numbers). Summer's peach went one step
+  heavier on request.
+- **Summer is the vivid candidate, winter the soft one.** Same assignment, two
+  intensities. Winter keeps the published lavender `#c6cdf7`; both keep the
+  published salmon `#fd6467`. Late stock, ink ladder and washes are
+  swan-budapest's.
+- **`ns` exists for this pair** (see the optional keys above). Without it,
+  `struct` drags every `std::` into the yellow and pink drops to 17.1%.
+- **The day editions are derived, not picked.** Each late accent is pressed
+  down its own hue line (`colorlib.walk(hex, [bg, bg_alt, bg_soft, bg_deep],
+  up=False)`) until it clears 4.5:1 on all four paper steps. swan-budapest's
+  day edition pressed only against bg/bg_alt and carried twelve accent
+  advisories; these carry none. Every day accent therefore lands near L 37,
+  and separation comes from hue and chroma. Summer's paper and ink ladders are
+  swan-budapest's day ones (pink paper). Winter's are new: the same L per step
+  at hue 307-308 with 70% of the chroma, CursorLine 1.093:1 and Visual
+  1.245:1, inside the family's ranges. Winter's day inks are capped at chroma
+  36 so it stays the quieter edition, except `alert`, which keeps full chroma
+  so errors still alarm. On paper the search fill is the goose yellow and the
+  live match the pink.
+- **One xterm pin:** winter day `quote` `#754e2b` -> 94, because nearest-Lab
+  put it on 95 with `env` `#764b52`.
+- **Measured** (colorlib audit, and the dump audit over 518 groups, 39
+  distinct text pairs per edition): 0 below AA in all four editions; 0 bold /
+  46 italic / 23 underline / 12 undercurl. Tightest emitted text pairs: late
+  5.17:1 in both, day 4.51 (summer) / 4.52 (winter). Closest accent pairs:
+  summer late built-in types/numbers dE 20.5; summer day strings/fields 18.6;
+  winter late strings/fields 16.7; winter day built-in types/numbers 15.6.
+- **The day editions pass law 2 by declaration.** Audit their palette JSONs
+  with every frequent role in `law_exceptions` (`['cmd', 'oper', 'ref',
+  'verb', 'quote', 'struct', 'opt', 'env']`), as swan-budapest's day edition
+  did: law 2 describes a dark page, and on paper AA forces every ink dark.
+  Without the list the audit reports eight law-2 violations.
+- **Inherited and left alone:** both day audits print "ladder BAD" (the
+  ink-ladder check assumes a dark page; swan-budapest's day edition printed it
+  too) and two `ink_mute` advisories, from swan-budapest's day ladder:
+  comments are 4.09:1 under a selection.
+- The ANSI bright partners are lifted at most 8 L, less where a full lift
+  would leave the gamut and come back near white (winter's lavender did).
+- The candidate comparison lives in the "布达佩斯亮色夜版" artifact. The
+  derivation and generator scripts lived in a session scratchpad, not the
+  repo; the method above is enough to redo them.
 
 ## Airline
 
-`autoload/airline/themes/swan_vga.vim`, `swan_phosphor.vim` and
-`swan_budapest.vim` ship with the themes,
+`autoload/airline/themes/swan_vga.vim`, `swan_phosphor.vim`,
+`swan_budapest_summer.vim` and `swan_budapest_winter.vim` ship with the themes,
 generated by `scripts/gen_airline.py` from the palette (which refuses to write
 a file if any pair is under AA).  They exist because without one airline
 derives its own colours: under vga it put `bg_deep` text on `bg_alt`, ~1.1:1,
@@ -493,11 +520,18 @@ knowing: `~/.vimrc.d/40-colorscheme.vim:72` guards that call with
 `g:airline_theme` instead.  Making vga the startup theme means setting
 `g:airline_theme = 'swan_vga'` too.
 
-Regenerate after any palette edit:
+Regenerate after any palette edit, with `-B` so Python does not rewrite the
+tracked `scripts/__pycache__`:
 
 ```
-command python3 scripts/gen_airline.py colors/swan-vga.vim colors/swan-phosphor.vim colors/swan-budapest.vim
+command python3 -B scripts/gen_airline.py colors/swan-phosphor.vim \
+    colors/swan-budapest-summer.vim colors/swan-budapest-winter.vim
 ```
+
+Not `colors/swan-vga.vim`: the committed `swan_vga.vim` predates vga's last
+reassignment (its insert block still wears the green that is now `struct`),
+so regenerating it would change a shipped look. Regenerate it only when that
+change is the point.
 
 ## Open items
 

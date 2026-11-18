@@ -13,7 +13,7 @@ colours and can land anywhere -- under vga it put bg_deep text on bg_alt, about
 invisible.  Every pair emitted here is asserted at WCAG AA first.
 
 A colors file with one palette (vga, phosphor) gets a flat theme file.  One
-with a day and a late edition (budapest) gets both, inside
+with a day and a late edition (swan-budapest-summer, -winter) gets both, inside
 airline#themes#<name>#refresh() -- airline calls that on every theme load, so
 the bar follows 'background' along with the page.
 """

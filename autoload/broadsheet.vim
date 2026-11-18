@@ -38,6 +38,10 @@
 "   struct   Structure/Typedef — class, struct, template, namespace, typedef;
 "            falls back to quote.  Splits the shape-declaring keywords from
 "            the types they declare (the jellybeans split).
+"   ns       namespaces (Namespace, CocSemTypeNamespace); without it they
+"            follow struct when that key exists, else the preprocessor.  Lets
+"            a palette split class names off its types and keep `std::` with
+"            the preprocessor.
 "   storage  StorageClass — static, const, extern, register; falls back to
 "            quote.  Qualifiers read as constant-machinery, not as types.
 "   except   Exception — try, catch, throw, raise; falls back to cmd, so the
@@ -807,7 +811,15 @@ function! broadsheet#apply(name, palette, ansi, ...) abort
   " (coc's own, and the one in this user's vimrc) probe it before falling back
   " to Include, so it is defined here to land on the same colour rather than
   " on the preprocessor's.
-  if has_key(a:palette, 'struct')
+  "
+  " The optional `ns` key overrides both.  A palette can split class names off
+  " its types with `struct` and still keep namespaces with the preprocessor:
+  " the budapest pair do, so every `std::` stays in the pink family instead
+  " of joining the class names.
+  if has_key(a:palette, 'ns')
+    call s:hi('Namespace', 'ns', '')
+    highlight! link CocSemTypeNamespace Namespace
+  elseif has_key(a:palette, 'struct')
     highlight! link CocSemTypeNamespace Structure
     highlight! link Namespace           Structure
   else
