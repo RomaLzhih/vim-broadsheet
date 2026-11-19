@@ -461,6 +461,13 @@ which is deleted; its notes and files are in git at `73f42f4`.
   intensities. Winter keeps the published lavender `#c6cdf7`; both keep the
   published salmon `#fd6467`. Late stock, ink ladder and washes are
   swan-budapest's.
+- **Summer's goose yellow went one step paler on 2026-11-19**, asked for as
+  "稍微调淡一点": `#fcea72` -> `#fbea85`, the same L 92 at chroma 51 instead
+  of 60, dE 8.8. It had been the loudest frequent colour on the page. Picked
+  from a dE 5 / 9 / 13 ladder, the middle step sits just under the keyword
+  pink (C 53) and stays dE 9.5 from winter's `#fae594`. Pressed for the day
+  edition it still gives `#5f5800`; the ANSI bright yellow and every xterm
+  cell are unchanged.
 - **`ns` exists for this pair** (see the optional keys above). Without it,
   `struct` drags every `std::` into the yellow and pink drops to 17.1%.
 - **The day editions are derived, not picked.** Each late accent is pressed
@@ -492,8 +499,10 @@ which is deleted; its notes and files are in git at `73f42f4`.
   ink-ladder check assumes a dark page; swan-budapest's day edition printed it
   too) and two `ink_mute` advisories, from swan-budapest's day ladder:
   comments are 4.09:1 under a selection.
-- The ANSI bright partners are lifted at most 8 L, less where a full lift
-  would leave the gamut and come back near white (winter's lavender did).
+- The ANSI bright partners: a late edition lifts each accent +8 L along its
+  hue line, capped at L 96, taking the largest whole step whose gamut-fitted
+  chroma keeps min(15, C) (winter's lavender stops at +7); a day edition
+  lifts +6 L. That rule reproduces all 24 shipped slots (checked 2026-11-19).
 - The candidate comparison lives in the "布达佩斯亮色夜版" artifact. The
   derivation and generator scripts lived in a session scratchpad, not the
   repo; the method above is enough to redo them.
@@ -515,10 +524,12 @@ interactive `:colorscheme` — and that `tr()` is why the files are
 `swan_<name>.vim` with an underscore while the colorschemes are
 `swan-<name>`: an autoload name cannot hold a hyphen. `gen_airline.py` makes
 the same substitution.  Caveat worth
-knowing: `~/.vimrc.d/40-colorscheme.vim:72` guards that call with
-`v:vim_did_enter`, so a theme set at *startup* keeps the pinned
-`g:airline_theme` instead.  Making vga the startup theme means setting
-`g:airline_theme = 'swan_vga'` too.
+knowing: the `AirlineFollowColorscheme` augroup in
+`~/.vim/vimrc.d/40-colorscheme.vim` guards that call with `v:vim_did_enter`,
+so a theme set at *startup* keeps the pinned `g:airline_theme` instead.
+swan-budapest-winter has been the startup theme since 2026-11-19, which is
+why `30-plugin-config.vim` pins `g:airline_theme = 'swan_budapest_winter'`;
+a different startup theme needs its own pin.
 
 Regenerate after any palette edit, with `-B` so Python does not rewrite the
 tracked `scripts/__pycache__`:

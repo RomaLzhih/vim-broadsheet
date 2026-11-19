@@ -14,20 +14,25 @@
 "   role       late     day      paints
 "   cmd        #ff86c0  #9b2867  keywords; storage too (const, static)
 "   env        #ffb9c9  #804555  #include, macros; ns too (std::)
-"   struct     #fcea72  #5f5800  class names; class / struct / template
+"   struct     #fbea85  #5f5800  class names; class / struct / template
 "   quote      #ffb878  #804a0c  built-in types: int, double, bool
 "   verb       #65ccfe  #065e7d  strings
 "   ref        #82e5b1  #01643f  functions, links
 "   opt        #becafe  #465582  fields, constants
 "   math       #ff9c80  #913d28  numbers, escapes
 "   alert      #fd6467  #ad122c  errors; except too (try, catch)
-"   marker     #60193f  #fcea72  search fill
-"   marker_hot #fcea72  #ff86c0  the live match
+"   marker     #60193f  #fbea85  search fill
+"   marker_hot #fbea85  #ff86c0  the live match
 "
 " Why the yellow is split: with class names and built-in types on one yellow
 " it covered a quarter of the file, so the built-in types take the peach.  The
 " `ns` key keeps namespaces with the preprocessor while `struct` exists (see
 " the core); without it every std:: would turn yellow too.
+"
+" The yellow was softened one step on 2026-11-19, at the user's request:
+" #fcea72 (chroma 60) was the loudest frequent colour on the page.  #fbea85
+" keeps L 92 at chroma 51, just under the keyword pink (53) and still dE 9.5
+" from winter's yellow.  Pressed for the day edition it still gives #5f5800.
 "
 " The built-in types went through four colours first: the film's burnt
 " orange (#d67236) was too dark at L 60, a bright tangerine (chroma 67) jumped
@@ -89,7 +94,7 @@ if &background ==# 'light'
         \ 'oper'      : ['#231a2c', '234'],
         \ 'storage'   : ['#9b2867', '89'],
         \ 'except'    : ['#ad122c', '88'],
-        \ 'marker'    : ['#fcea72', '228'],
+        \ 'marker'    : ['#fbea85', '228'],
         \ 'marker_hot': ['#ff86c0', '211'],
         \ 'on_hot'    : ['#231a2c', '234'],
         \ 'diff_add'  : ['#c5e8d5', '152'],
@@ -123,12 +128,12 @@ else
         \ 'verb'      : ['#65ccfe', '117'],
         \ 'opt'       : ['#becafe', '189'],
         \ 'quote'     : ['#ffb878', '215'],
-        \ 'struct'    : ['#fcea72', '228'],
+        \ 'struct'    : ['#fbea85', '228'],
         \ 'oper'      : ['#f6eae9', '255'],
         \ 'storage'   : ['#ff86c0', '211'],
         \ 'except'    : ['#fd6467', '203'],
         \ 'marker'    : ['#60193f', '89'],
-        \ 'marker_hot': ['#fcea72', '228'],
+        \ 'marker_hot': ['#fbea85', '228'],
         \ 'on_hot'    : ['#1a131f', '234'],
         \ 'diff_add'  : ['#162f23', '22'],
         \ 'diff_chg'  : ['#17233b', '17'],
@@ -136,7 +141,7 @@ else
         \ 'diff_txt'  : ['#243e68', '24'],
         \ }
   let s:ansi = [
-        \ '#241c2b', '#fd6467', '#82e5b1', '#fcea72',
+        \ '#241c2b', '#fd6467', '#82e5b1', '#fbea85',
         \ '#65ccfe', '#ff86c0', '#becafe', '#cfc3cd',
         \ '#837888', '#ff8b88', '#99fcc7', '#fff4c6',
         \ '#a8defe', '#feabd0', '#dce1fe', '#f6eae9',

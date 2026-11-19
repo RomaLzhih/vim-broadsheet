@@ -340,7 +340,7 @@ code. Here the pink family covers 21.5% and the goose yellow 18%.
 |---|---|---|---|
 | `cmd`, `storage` | `#ff86c0` | `#ffa7ce` | keywords, and `const` / `static` / `constexpr` |
 | `env`, `ns` | `#ffb9c9` | `#fecad1` | `#include`, macros, every `std::` |
-| `struct` | `#fcea72` | `#fae594` | class names; `class` / `struct` / `template` |
+| `struct` | `#fbea85` | `#fae594` | class names; `class` / `struct` / `template` |
 | `quote` | `#ffb878` | `#fac89f` | built-in types: `int`, `double`, `bool` |
 | `verb` | `#65ccfe` | `#90cef7` | strings |
 | `ref` | `#82e5b1` | `#99e1bc` | functions |
